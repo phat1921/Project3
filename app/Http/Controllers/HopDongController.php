@@ -84,8 +84,8 @@ class HopDongController extends Controller
        $loaiHD = $request->get('loaiHD');
        $chinhanh = $request->get('chinhanh');
        $diachi = $request->get('diachi');
-       $salary = $request->get('salary');
-       $phucap = $request->get('phucap');
+       $salary =  str_replace(',', '',$request->get('salary'));
+       $phucap =  str_replace(',', '',$request->get('phucap'));
        $startday = $request->get('startday');
        $enddate = $request->get('endday');
        $trangthai = $request->get('trangthai');

@@ -108,12 +108,12 @@ function edit(id){
             $('#idNv').val(response.data.id_nv).change();
             $('#idChucVu').val(response.data.id_chuc_vu).change();
             $('#loaiHD').val(response.data.loai_hop_dong);
-            $('#phucap').val(response.data.phu_cap);
+            $('#phucap').val(Comma(response.data.phu_cap));
             $('#chinhanh').val(response.data.chi_nhanh);
             $('#diachi').val(response.data.dia_diem);
             $('#startday').val(response.data.ngay_bat_dau);
             $('#endday').val(response.data.ngay_ket_thuc);
-            $('#salary').val(response.data.luong_co_ban);
+            $('#salary').val(Comma(response.data.luong_co_ban));
             $('#trangthai').val(response.data.trang_thai_hd).change();
 
 

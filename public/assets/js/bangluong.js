@@ -7,7 +7,13 @@ $(document).ready(function () {
         }
     });
     "use strict";
-
+    if(user != 1){
+        var seach = false;
+        var paginate = false;
+    }else{
+        seach = true;
+        paginate = true;
+    }
     if($('.table').length){
        $('.table').DataTable({
            ajax: "/bang-luong/list",
@@ -17,6 +23,8 @@ $(document).ready(function () {
            // serverSide:true,
            // dataType: "json",
            // ordering: false,
+           searching: seach,
+            paginate:paginate,
            columns: [
                {},
                {data: "id_bl"},
@@ -27,8 +35,8 @@ $(document).ready(function () {
                {data: "phu_cap"},
                {data: "thuong"},
                {data: "ung_truoc"},
-               {data: "phat_muon"},
-               {data: "thuc_linh"},
+               {},
+               {},
                {data: "tinh_trang"}
                
            ],
@@ -41,11 +49,11 @@ $(document).ready(function () {
                 render: function (data, type, full, meta) {
                     var html = '';
                     if(user == 1 && full['tinh_trang'] == 1){
-                        html += '<button rel="tooltip" class="btn btn-info" title="Chỉnh sửa" onclick="edit(' + full['id_bl'] + ')">';
-                        html += '<i class="material-icons">edit</i>';
-                        html += '</button>&nbsp';
                         html += '<button rel="tooltip" class="btn btn-success" title="Duyệt" id="confirm-text" onclick="checkById(' + full['id_bl'] + ')">';
                         html += '<i class="material-icons">done</i>';
+                        html += '</button>&nbsp';
+                        html += '<button rel="tooltip" class="btn btn-info" title="Chỉnh sửa" onclick="edit(' + full['id_bl'] + ')">';
+                        html += '<i class="material-icons">edit</i>';
                         html += '</button>';
                     }else if(user == 1 && full['tinh_trang'] == 2){
                         html += '<button rel="tooltip" class="btn btn-danger" title="Hoàn duyệt" onclick="unCheck(' + full['id_bl'] + ')">';
@@ -60,6 +68,60 @@ $(document).ready(function () {
             {
                 targets: 1,
                 visible:false,
+            },
+            {
+                targets: [5,6,7,8],
+                render: function (data, type, full, meta) {
+                    
+                     return (
+                         '<div >' + data.toLocaleString('vi', {style : 'currency', currency : 'VND'}) +'</div>'
+                     );
+ 
+                 }
+    
+            },
+            {
+                targets: 9,
+                render: function (data, type, full, meta) {
+                    var $ngaymuon = full['phat_muon'];
+ 
+                     if($ngaymuon > 0){
+                         var $phat = $ngaymuon * 100000;
+                     }else{
+                         $phat = 0;
+                     }
+                     return (
+                         '<div >' + $phat.toLocaleString('vi', {style : 'currency', currency : 'VND'}) +'</div>'
+                     );
+ 
+                 }
+            },
+            {
+                targets: 10,
+                // visible:false,
+                title:'Thực lĩnh',
+                render: function (data, type, full, meta) {
+                   var $congchuan = full['cong_chuan'];
+                   var $congtt = full['cong_thuc_te'];
+                   var $luongcb = full['luong_co_ban'];
+                   var $phucap = full['phu_cap'];
+                   var $thuong = full['thuong'];
+                   var $ungtruoc = full['ung_truoc'];
+                   var $ngaymuon = full['phat_muon'];
+
+                    if($ngaymuon > 0){
+                        var $phat = $ngaymuon * 100000;
+                    }else{
+                        $phat = 0;
+                    }
+
+                    $thuclinh = ((($luongcb + $phucap)/$congchuan) * $congtt) + $thuong - $phat - $ungtruoc;
+
+                    return (
+                        '<div >' +$thuclinh.toLocaleString('vi', {style : 'currency', currency : 'VND'}) +'</div>'
+                    );
+
+                }
             },
             {
                 targets: -1,
@@ -99,6 +161,19 @@ $(document).ready(function () {
 function add(){
     var thang = $("#thang").val();
     var nam = $("#nam").val();
+    swal({
+        title: 'Lập bảng lương',
+        text: 'Bạn có chắc chắn muốn lập bảng lương tháng ' + thang + '/' + nam+'?',
+        icon: 'warning',
+        showCancelButton:true,
+        confirmButtonText:'Đồng ý',
+        cancelButtonText:'Bỏ qua',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+    }).then(function (result) {
+        if(result){
+    
         $.ajax({
             type: "post",
             url: '/bang-luong/add?thang='+thang+"&nam="+nam,
@@ -120,6 +195,8 @@ function add(){
                 }
             }
         });
+    }
+    })
 }
 
 function edit(id){
@@ -135,9 +212,9 @@ function edit(id){
         data: {id : id},
         success: function (response) {
             console.log(response);
-            $('#phucap').val(response.data.phu_cap);
-            $('#thuong').val(response.data.thuong);
-            $('#ungtruoc').val(response.data.ung_truoc);
+            $('#phucap').val(Comma(response.data.phu_cap));
+            $('#thuong').val(Comma(response.data.thuong));
+            $('#ungtruoc').val(Comma(response.data.ung_truoc));
             $('#dimuon').val(response.data.phat_muon);
 
 
@@ -148,6 +225,20 @@ function edit(id){
 
 function save(){
     $('#frm').validate({
+        rules: {
+            phucap: {
+                number: true,
+            },
+            thuong: {
+                number: true,
+            },
+            ungtruoc: {
+                number: true,
+            },
+            dimuon: {
+                number: true,
+            }
+        },
     submitHandler: function (form){
         var formdata = new FormData(form);
         $.ajax({

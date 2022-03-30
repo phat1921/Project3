@@ -58,7 +58,7 @@
             <th>Thưởng</th>
             <th>Ứng trước</th>
             <th>Phạt</th>
-            <th>Thực lĩnh</th>
+            <th></th>
             <th></th>
 		</thead>
 	</table>
@@ -85,19 +85,19 @@
                     @csrf
                     <div class="form-group label-floating">
                         <label class="control-label">Phụ cấp</label>
-                        <input type="number" id="phucap" name="phucap" class="form-control"/>
+                        <input  id="phucap" name="phucap" class="form-control"/>
                     </div>
                     <div class="form-group label-floating">
                         <label class="control-label">Thưởng</label>
-                        <input type="munber" id="thuong" name="thuong"  class="form-control"/>
+                        <input type="text" id="thuong" name="thuong"  class="form-control"/>
                     </div>
                     <div class="form-group label-floating">
                       <label class="control-label">Ứng trước</label>
-                      <input type="munber" id="ungtruoc" name="ungtruoc"  class="form-control"/>
+                      <input type="text" id="ungtruoc" name="ungtruoc"  class="form-control"/>
                   </div>
                   <div class="form-group label-floating">
                     <label class="control-label">Số ngày đi muộn</label>
-                    <input type="munber" id="dimuon" name="dimuon"  class="form-control"/>
+                    <input type="text" id="dimuon" name="dimuon"  class="form-control"/>
                 </div>
                 </form>
             </div>

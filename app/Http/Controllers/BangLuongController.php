@@ -79,49 +79,60 @@ class BangLuongController extends Controller
                             ->where('id','>',1)
                             ->where('trang_thai', '>', 0)
                             ->get();
-        // $id = explode(",", $iduser);
-        // $congtt = ChamCong::where('id_nhan_vien', $iduser )
-        //                   ->where('ngay', 'like','%'. $ngay . '%')    
-        //                   ->count();               
-        // dd($ngay,$congtt);
-        // return;             
-        // foreach($iduser as $user){
-            // $id = $user['id'];
-            // $data = [];
-            // $data['id_nhan_vien'] = $id;
-            // $data['nam'] = $nam;
-            // $data['thang'] = $thang;
-            // $data['cong_chuan'] = 24;
-          
-            $luongcb = HopDong::select('hop_dong_lao_dong.luong_co_ban', 'hop_dong_lao_dong.phu_cap')
-                                ->join('nhan_vien','hop_dong_lao_dong.id_nv','=', 'nhan_vien.id')
-                                ->where('nhan_vien.id',3)
-                                ->join('chuc_vu', 'chuc_vu.id', '=', 'hop_dong_lao_dong.id_chuc_vu')
-                                ->get();
-            // $data['luong_co_ban'] = $luongcb;    
-            // $data['phu_cap'] = 0;
-            // $data['tinh_trang'] = 1;
-            
-            $bangluong =  BangLuong::create([
-                'id_nhan_vien' => 3,
-                'nam' => $nam,
-                'thang' => $thang,
-                'cong_chuan' => 24,
-                'luong_co_ban' => $luongcb,
-                'phu_cap' => 0,
-                'phat_muon' => 0,
-                'tinh_trang' => 1,
+         
+        $checkexist = BangLuong::where('nam', $nam)
+                            ->where('thang', $thang)
+                            ->where('tinh_trang', '>=', 1)
+                            ->count();
+                
+        if($checkexist == 0){
+        foreach($iduser as $user){
+            $id = $user['id'];
+            $congtt = ChamCong::where('id_nhan_vien', $id)
+                                ->where('ngay', 'like','%'. $ngay . '%')
+                                ->count();
 
-            ]);
-            
-            $bangluong->save();
-            // dd($id);
-            // $congtt = ChamCong::where('id_nhan_vien', $iduser)
-            //                     ->where('ngay', 'like','%'. $ngay . '%')
-            //                     ->count();
-            // dd($congtt);  
+            $luongcb = HopDong::select('luong_co_ban')
+                                ->where('id_nv', $id)
+                                ->pluck('luong_co_ban');
+            $luongcb = str_replace(array('[',']'),"",$luongcb);   
 
-        // }
+            $phucap = HopDong::select('phu_cap')
+                                ->where('id_nv', $id)
+                                ->pluck('phu_cap');   
+            $phucap = str_replace(array('[',']'),"",$phucap); 
+
+            $dimuon = ChamCong::where('id_nhan_vien', $id)
+                                    ->where('ngay', 'like','%'. $ngay . '%')
+                                    ->where('gio_vao','>','08:15:00')
+                                    ->count();
+           
+                $bangluong = BangLuong::create([
+                    'id_nhan_vien' => $id,
+                    'nam' => $nam,
+                    'thang' => $thang,
+                    'cong_chuan' => 24,
+                    'cong_thuc_te' => $congtt,
+                    'luong_co_ban' => $luongcb,
+                    'phu_cap' => $phucap,
+                    'thuong' => 0,
+                    'ung_truoc' => 0,
+                    'phat_muon' => $dimuon,
+                    'tinh_trang' => 1,
+                ]);
+                    if( $bangluong->save()){
+                        $json['msg'] = "Cập nhật dữ liệu thành công";
+                        $json['code'] = 200;
+                    }else{
+                        $json['msg'] = "Cập nhật dữ liệu thất bại";
+                        $json['code'] = 401; 
+                    }
+        }
+    }else{
+        $json['msg'] = "Bảng lương ".$thang."/".$nam." đã tồn tại";
+        $json['code'] = 401; 
+}        
+        echo json_encode($json);
     }
 
     public function load(Request $request, $id){
@@ -141,9 +152,9 @@ class BangLuongController extends Controller
             return Redirect::route('calendar');
             return false;
                 }
-       $phucap =  $request->get('phucap');
-       $thuong = $request->get('thuong');
-       $ungtruoc = $request->get('ungtruoc');
+       $phucap =  str_replace(',', '',$request->get('phucap'));
+       $thuong =  str_replace(',', '',$request->get('thuong'));
+       $ungtruoc =  str_replace(',', '',$request->get('ungtruoc'));
        $dimuon = $request->get('dimuon');
        $bangluong = BangLuong::find($id);
        $bangluong->phu_cap = $phucap;
@@ -162,6 +173,10 @@ class BangLuongController extends Controller
     }
 
     public function checkall(Request $request){ 
+        if($request->session()->get('id') != 1){
+            return Redirect::route('calendar');
+            return false;
+                }
         $nam = $request->get('nam');
         $thang = $request->get('thang');
         $checkall = BangLuong::where('nam',$nam)
@@ -178,7 +193,11 @@ class BangLuongController extends Controller
         echo json_encode($json);                        
     }
 
-    public function uncheck($id){
+    public function uncheck(Request $request, $id){
+        if($request->session()->get('id') != 1){
+            return Redirect::route('calendar');
+            return false;
+                }
         $uncheck = BangLuong::find($id);
         $uncheck->tinh_trang = 1;
         
@@ -192,7 +211,11 @@ class BangLuongController extends Controller
         echo json_encode($json);   
     }
 
-    public function checkById($id){
+    public function checkById(Request $request, $id){
+        if($request->session()->get('id') != 1){
+            return Redirect::route('calendar');
+            return false;
+                }
         $checkById = BangLuong::find($id);
         $checkById->tinh_trang = 2;
         
