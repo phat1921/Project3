@@ -1,14 +1,14 @@
 var url ='';
 $(document).ready(function () {
+    "use strict";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    "use strict";
     if($('.table').length){
        $('.table').DataTable({
-           ajax: "/chuc-vu/list",
+           ajax: "/truy-cap/list",
            processing:true,
         //    scrollX:false,
         //    scrollY:true,
@@ -17,8 +17,8 @@ $(document).ready(function () {
            // ordering: false,
            columns: [
                {data: "id"},
-               {data: "ten_chuc_vu"},
-               {data: "luong_co_ban"},
+               {data: "ten_dia_diem"},
+               {data: "ip"},
                {},
            ],
            columnDefs: [
@@ -26,7 +26,7 @@ $(document).ready(function () {
                 targets: 0,
                 visible: false,
             },
-
+            
             {
                 targets: -1,
                 title:'Thao tác',
@@ -55,7 +55,6 @@ $(document).ready(function () {
             infoFiltered: "(Lọc từ _MAX_ bản ghi)",
             sInfoEmpty: "Hiển thị 0 đến 0 của 0 bản ghi"
         },
-
        });
     };
    
@@ -64,29 +63,29 @@ $(document).ready(function () {
 function add(){
     $('#frm')[0].reset();
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Thêm chức vụ mới');
-    $('.icons-chuc-vu .material-icons').html('add');
+    $('.title-dia-diem').html('Thêm điểm truy cập mới');
+    $('.icons-dia-diem .material-icons').html('add');
     $('#name').val();
-    $('#salary').val();
-    url = "/chuc-vu/add";
+    $('#ip').val();
+    url = "/truy-cap/add";
 
 }
 
 function edit(id){
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Cập nhật chức vụ');
-    $('.icons-chuc-vu .material-icons').html('edit');
+    $('.title-dia-diem').html('Cập nhật điểm truy cập');
+    $('.icons-dia-diem .material-icons').html('edit');
     $.ajax({
         type: "get",
-        url: "/chuc-vu/load/"+id,
+        url: "/truy-cap/load/"+id,
         dataType: "json",
         data: {id : id},
         success: function (response) {
             console.log(response);
-            $('#name').val(response.data.ten_chuc_vu);
-            $('#salary').val(response.data.luong_co_ban);
+            $('#name').val(response.data.ten_dia_diem);
+            $('#ip').val(response.data.ip);
 
-            url = "/chuc-vu/edit/"+id;
+            url = "/truy-cap/edit/"+id;
         }
     });
 }
@@ -97,16 +96,16 @@ function save(){
             "name": {
                 required: true,
             },
-            "salary": {
+            "ip": {
                 required: true,
             }
         },
         messages: {
             "name": {
-                required: "Bạn chưa nhập tên phòng ban!",
+                required: "Bạn chưa nhập tên điểm truy cập!",
             },
-            "salary": {
-                required: "Bạn chưa nhập tên phòng ban!",
+            "ip": {
+                required: "Bạn chưa nhập ip!",
             }
             
         },
@@ -155,7 +154,7 @@ function del(id){
         if(result){
             $.ajax({
                 type: "post",
-                url: "/chuc-vu/del/"+id,
+                url: "/truy-cap/del/"+id,
                 data: {id: id},
                 dataType: "json",
                 contentType: false,

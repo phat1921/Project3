@@ -16,9 +16,12 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{ asset('assets') }}/css/demo.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" /> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -75,6 +78,8 @@
             </div>
         </body>
         <!--   Core JS Files   -->
+       
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> 
         <script src="{{ asset('assets') }}/js/jquery-3.2.1.min.js" type="text/javascript"></script>
         <script src="{{ asset('assets') }}/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="{{ asset('assets') }}/js/material.min.js" type="text/javascript"></script>
@@ -125,6 +130,11 @@
         
                 demo.initVectorMap();
             });
+        </script>
+         <script type="text/javascript">
+           
+                var user = '<?= Session::get('id') ?>';
+        
         </script>
         
         </html>

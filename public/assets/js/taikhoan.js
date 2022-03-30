@@ -1,14 +1,14 @@
 var url ='';
 $(document).ready(function () {
+    "use strict";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    "use strict";
     if($('.table').length){
        $('.table').DataTable({
-           ajax: "/chuc-vu/list",
+           ajax: "/tai-khoan/getTK",
            processing:true,
         //    scrollX:false,
         //    scrollY:true,
@@ -17,9 +17,10 @@ $(document).ready(function () {
            // ordering: false,
            columns: [
                {data: "id"},
-               {data: "ten_chuc_vu"},
-               {data: "luong_co_ban"},
-               {},
+               {data: "ten_nv"},
+               {data: "ten_tk"},
+               {data: "trang_thai"},
+               {}
            ],
            columnDefs: [
             {
@@ -27,6 +28,18 @@ $(document).ready(function () {
                 visible: false,
             },
 
+            {
+                targets: 3,
+                render: function (data, type, full, meta) {
+                   if(full['trang_thai'] == 1){
+                        return '<span>Đang sử dụng</span>';
+                   }else{
+                       return '<span>Đã khóa</span>';
+                   }
+                    
+                },
+            },
+            
             {
                 targets: -1,
                 title:'Thao tác',
@@ -55,38 +68,70 @@ $(document).ready(function () {
             infoFiltered: "(Lọc từ _MAX_ bản ghi)",
             sInfoEmpty: "Hiển thị 0 đến 0 của 0 bản ghi"
         },
-
        });
     };
-   
+    
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url:"/tai-khoan/staff",
+        success: function (data) {
+            var html = '';
+            data.forEach(function (element, index) {
+                // if (element.selected == true)
+                //     var select = 'selected';
+                html += `<option value="${element.id}">${element.text}</option> `;
+            });
+            $('#idNv').html(html);
+        },
+    });
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url:"/tai-khoan/ip",
+        success: function (data) {
+            var html = '';
+            data.forEach(function (element, index) {
+                // if (element.selected == true)
+                //     var select = 'selected';
+                html += `<option value="${element.id}">${element.text}</option> `;
+            });
+            $('#truycap').html(html);
+        },
+    });
    
    })
 function add(){
     $('#frm')[0].reset();
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Thêm chức vụ mới');
-    $('.icons-chuc-vu .material-icons').html('add');
-    $('#name').val();
-    $('#salary').val();
-    url = "/chuc-vu/add";
+    $('.title-tai-khoan').html('Thêm tài khoản mới');
+    $('.icons-tai-khoan .material-icons').html('add');
+//    var id =  $('#idNv').val().change();
+    $('#tenTk').val();
+    $('#password').val();
+    url = "/tai-khoan/addTK";
 
 }
 
 function edit(id){
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Cập nhật chức vụ');
-    $('.icons-chuc-vu .material-icons').html('edit');
+    $('.title-tai-khoan').html('Cập nhật tài khoản');
+    $('.icons-tai-khoan .material-icons').html('edit');
     $.ajax({
         type: "get",
-        url: "/chuc-vu/load/"+id,
+        url: "/tai-khoan/loadTK/"+id,
         dataType: "json",
         data: {id : id},
         success: function (response) {
-            console.log(response);
-            $('#name').val(response.data.ten_chuc_vu);
-            $('#salary').val(response.data.luong_co_ban);
+            $('#idNv').val(response.data.id).trigger('change');
+            $('#truycap').val(response.data.id_dd_truy_cap).trigger('change');
+            $('#tenTk').val(response.data.ten_tk);
+            $('#password').val(response.data.mat_khau);
 
-            url = "/chuc-vu/edit/"+id;
+            url = "/tai-khoan/editTK/"+id;
         }
     });
 }
@@ -94,19 +139,19 @@ function edit(id){
 function save(){
     $('#frm').validate({
         rules:{
-            "name": {
+            "tenTk": {
                 required: true,
             },
-            "salary": {
+            "password": {
                 required: true,
             }
         },
         messages: {
-            "name": {
-                required: "Bạn chưa nhập tên phòng ban!",
+            "tenTk": {
+                required: "Bạn chưa nhập tên tài khoản!",
             },
-            "salary": {
-                required: "Bạn chưa nhập tên phòng ban!",
+            "password": {
+                required: "Bạn chưa nhập mật khẩu!",
             }
             
         },
@@ -130,7 +175,6 @@ function save(){
                     $('.table').DataTable().ajax.reload(null, false);
                 }else{
                     notify_error(response.msg);
-                    $('#add_edit').modal('hide');
                 }
             }
         });
@@ -155,7 +199,7 @@ function del(id){
         if(result){
             $.ajax({
                 type: "post",
-                url: "/chuc-vu/del/"+id,
+                url: "/tai-khoan/del/"+id,
                 data: {id: id},
                 dataType: "json",
                 contentType: false,

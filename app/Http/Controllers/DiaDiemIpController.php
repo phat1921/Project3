@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ChucVu;
+use App\Models\DiaDiemIp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class ChucVuController extends Controller
+class DiaDiemIpController extends Controller
 {
     public function index(Request $request)
     {
@@ -14,7 +14,7 @@ class ChucVuController extends Controller
             return Redirect::route('calendar');
             return false;
                 }
-        return view('ChucVu');
+        return view('diadiemip');
     }
 
     public function list(Request $request)
@@ -24,22 +24,24 @@ class ChucVuController extends Controller
             return false;
                 }
         $data = [];
-        $chucVu = ChucVu::where('trang_thai',1)->get();
-        $data['data'] = $chucVu;
+        $diadiem = DiaDiemIp::where('trang_thai',1)->get();
+        $data['data'] = $diadiem;
         echo json_encode($data);
     }
 
-    public function load(Request $request,$id)
+    public function load(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
             return Redirect::route('calendar');
             return false;
                 }
-        $chucVu = ChucVu::where('trang_thai',1)->find($id);
-        $data['data'] = $chucVu;
+        $diadiem = DiaDiemIp::where('trang_thai',1)->find($id);
+        $data['data'] = $diadiem;
         echo json_encode($data);
         // return $chucVu;
     }
+
+    
 
     public function edit(Request $request, $id)
     {
@@ -48,18 +50,18 @@ class ChucVuController extends Controller
             return false;
                 }
         $name =  $request->get('name');
-       $salary = $request->get('salary');
-       $chucvu = ChucVu::find($id);
-       $chucvu->ten_chuc_vu = $name;
-       $chucvu->luong_co_ban = $salary;
+       $ip = $request->get('ip');
+       $diadiem = DiaDiemIp::find($id);
+       $diadiem->ten_dia_diem = $name;
+       $diadiem->ip= $ip;
 
-      if($chucvu->save()){
-          $json['msg'] = "Cập nhật dữ liệu thành công";
-          $json['code'] = 200;
-      }else{
-        $json['msg'] = "Cập nhật dữ liệu thất bại";
-        $json['code'] = 401; 
-      }
+       if( $diadiem->save()){
+            $json['msg'] = "Cập nhật dữ liệu thành công";
+            $json['code'] = 200;
+        }else{
+            $json['msg'] = "Cập nhật dữ liệu thất bại";
+            $json['code'] = 401; 
+        }
        echo json_encode($json);
     }
 
@@ -70,20 +72,20 @@ class ChucVuController extends Controller
             return false;
                 }
        $name =  $request->get('name');
-       $salary = $request->get('salary');
-       $chucvu = new ChucVu();
-       $chucvu->ten_chuc_vu = $name;
-       $chucvu->luong_co_ban = $salary;
-       $chucvu->trang_thai = 1;
+       $ip = $request->get('ip');
+       $diadiem = new DiaDiemIp();
+       $diadiem->ten_dia_diem = $name;
+       $diadiem->ip = $ip;
+       $diadiem->trang_thai = 1;
 
-       if($chucvu->save()){
-            $json['msg'] = "Cập nhật dữ liệu thành công";
-            $json['code'] = 200;
-        }else{
-            $json['msg'] = "Cập nhật dữ liệu thất bại";
-            $json['code'] = 401; 
-        }
-       echo json_encode($json);
+       if( $diadiem->save()){
+        $json['msg'] = "Cập nhật dữ liệu thành công";
+        $json['code'] = 200;
+    }else{
+        $json['msg'] = "Cập nhật dữ liệu thất bại";
+        $json['code'] = 401; 
+    }
+   echo json_encode($json);
     }
 
     public function del(Request $request, $id)
@@ -92,16 +94,16 @@ class ChucVuController extends Controller
             return Redirect::route('calendar');
             return false;
                 }
-       $chucvu = ChucVu::find($id);
-       $chucvu->trang_thai = 0;
+       $diadiem = DiaDiemIp::find($id);
+       $diadiem->trang_thai = 0;
 
-       if($chucvu->save()){
+       if( $diadiem->save()){
         $json['msg'] = "Cập nhật dữ liệu thành công";
         $json['code'] = 200;
     }else{
         $json['msg'] = "Cập nhật dữ liệu thất bại";
         $json['code'] = 401; 
     }
-       echo json_encode($json);
+   echo json_encode($json);
     }
 }

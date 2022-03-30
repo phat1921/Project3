@@ -58,7 +58,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Email</label>
-                                                <input type="email" name="username" class="form-control">
+                                                <input type="text" name="username" class="form-control">
                                             </div>
                                         </div>
                                         <div class="input-group">

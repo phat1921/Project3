@@ -1,14 +1,14 @@
-var url ='';
+var url ='';  
 $(document).ready(function () {
+    "use strict";
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    "use strict";
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
     if($('.table').length){
        $('.table').DataTable({
-           ajax: "/chuc-vu/list",
+           ajax: "/nhan-vien/list",
            processing:true,
         //    scrollX:false,
         //    scrollY:true,
@@ -17,8 +17,11 @@ $(document).ready(function () {
            // ordering: false,
            columns: [
                {data: "id"},
-               {data: "ten_chuc_vu"},
-               {data: "luong_co_ban"},
+               {data: "ma_nv"},
+               {data: "ten_nv"},
+               {data: "email"},
+               {data: "sdt_nv"},
+               {data: "ngay_sinh"},
                {},
            ],
            columnDefs: [
@@ -26,16 +29,17 @@ $(document).ready(function () {
                 targets: 0,
                 visible: false,
             },
-
+            
             {
+                
                 targets: -1,
                 title:'Thao tác',
                 class:'td-actions text-right',
                 // orderable: false,
                 render: function (data, type, full, meta) {
                     var html = '';
-                    if(user == 1){
-                        html += '<button rel="tooltip" class="btn btn-success" title="Chỉnh sửa" onclick="edit(' + full['id'] + ')">';
+                    if(user == 1 ){
+                        html += '<button rel="tooltip" class="btn btn-success " title="Chỉnh sửa" onclick="edit(' + full['id'] + ')">';
                         html += '<i class="material-icons">edit</i>';
                         html += '</button>&nbsp';
                         html += '<button rel="tooltip" class="btn btn-danger" title="Xóa" id="confirm-text" onclick="del(' + full['id'] + ')">';
@@ -43,8 +47,10 @@ $(document).ready(function () {
                         html += '</button>';
                     }
                     return html;
+                    
                 },
                 width: 200,
+            
             },
         ],
         order: [[0, 'desc']],
@@ -55,38 +61,63 @@ $(document).ready(function () {
             infoFiltered: "(Lọc từ _MAX_ bản ghi)",
             sInfoEmpty: "Hiển thị 0 đến 0 của 0 bản ghi"
         },
-
        });
     };
    
+    $('.datepicker').datetimepicker({
+        format: 'MM/DD/YYYY',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        }
+    });
    
    })
 function add(){
     $('#frm')[0].reset();
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Thêm chức vụ mới');
-    $('.icons-chuc-vu .material-icons').html('add');
+    $('.title-nhan-vien').html('Thêm thông tin nhân sự');
+    $('.icons-nhan-vien .material-icons').html('add');
     $('#name').val();
     $('#salary').val();
-    url = "/chuc-vu/add";
+    url = "/nhan-vien/add";
 
 }
 
 function edit(id){
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Cập nhật chức vụ');
-    $('.icons-chuc-vu .material-icons').html('edit');
+    $('.title-nhan-vien').html('Cập nhật thông tin nhân sự');
+    $('.icons-nhan-vien .material-icons').html('edit');
     $.ajax({
         type: "get",
-        url: "/chuc-vu/load/"+id,
+        url: "/nhan-vien/load/"+id,
         dataType: "json",
         data: {id : id},
         success: function (response) {
             console.log(response);
-            $('#name').val(response.data.ten_chuc_vu);
-            $('#salary').val(response.data.luong_co_ban);
-
-            url = "/chuc-vu/edit/"+id;
+            if(response.data.gioi_tinh == 1 ){
+                $('#male1').prop("checked", true);
+            }else{
+                $('#female1').prop("checked", true);
+            }
+            $('#manv').val(response.data.ma_nv);
+            $('#date').val(response.data.ngay_sinh);
+            $('#sdt').val(response.data.sdt_nv);
+            $('#email').val(response.data.email);
+            $('#cmnd').val(response.data.cmnd);
+            $('#quoctich').val(response.data.quoc_tich);
+            $('#quequan').val(response.data.que_quan);
+            $('#diachi').val(response.data.dia_chi);
+            $('#name').val(response.data.ten_nv);
+           
+            url = "/nhan-vien/edit/"+id;
         }
     });
 }
@@ -97,17 +128,38 @@ function save(){
             "name": {
                 required: true,
             },
-            "salary": {
+            "manv": {
                 required: true,
-            }
+            },
+            "date": {
+                required: true,
+            },
+            "sdt": {
+                required: true,
+            },
+            "email": {
+                required: true,
+                email: true,
+            },
+        
         },
         messages: {
             "name": {
-                required: "Bạn chưa nhập tên phòng ban!",
+                required: "Bạn chưa nhập tên nhân viên!",
             },
-            "salary": {
-                required: "Bạn chưa nhập tên phòng ban!",
-            }
+            "manv": {
+                required: "Bạn chưa nhập mã nhân viên!",
+            },
+            "date": {
+                required: "Bạn chưa nhập ngày sinh nhân viên!",
+            },
+            "sdt": {
+                required: "Bạn chưa nhập số điện thoại nhân viên!",
+            },
+            "email": {
+                required: "Bạn chưa nhập email nhân viên!",
+                email: "Bạn chưa nhập đúng định dạng email!",
+            },
             
         },
 
@@ -155,7 +207,7 @@ function del(id){
         if(result){
             $.ajax({
                 type: "post",
-                url: "/chuc-vu/del/"+id,
+                url: "/nhan-vien/del/"+id,
                 data: {id: id},
                 dataType: "json",
                 contentType: false,

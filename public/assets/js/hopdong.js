@@ -1,48 +1,56 @@
 var url ='';
 $(document).ready(function () {
+    "use strict";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    "use strict";
     if($('.table').length){
        $('.table').DataTable({
-           ajax: "/chuc-vu/list",
+           ajax: "/hop-dong/list",
            processing:true,
-        //    scrollX:false,
-        //    scrollY:true,
-           // serverSide:true,
-           // dataType: "json",
-           // ordering: false,
            columns: [
-               {data: "id"},
-               {data: "ten_chuc_vu"},
-               {data: "luong_co_ban"},
+            //    {data: "id_hd"},
+               {data: "loai_hop_dong"},
+               {data: "ten_nv"},
+               {data: "trang_thai_hd"},
                {},
            ],
            columnDefs: [
             {
-                targets: 0,
-                visible: false,
+                targets: 2,
+                render: function (data, type, full, meta) {
+                    var $status = full['trang_thai_hd'];
+                       if($status == 1){
+                            return "<span>Đang thực hiện</span>";
+                       } else if($status == 2){
+                            return "<span>Đã kết thúc</span>";
+                       }
+                 
+                },
             },
 
+            
             {
                 targets: -1,
                 title:'Thao tác',
                 class:'td-actions text-right',
                 // orderable: false,
                 render: function (data, type, full, meta) {
-                    var html = '';
-                    if(user == 1){
-                        html += '<button rel="tooltip" class="btn btn-success" title="Chỉnh sửa" onclick="edit(' + full['id'] + ')">';
+                   
+                    var html = ''; 
+                    
+                        html += '<button rel="tooltip" class="btn btn-success" title="Chỉnh sửa" onclick="edit(' + full['id_hd'] + ')">';
                         html += '<i class="material-icons">edit</i>';
                         html += '</button>&nbsp';
-                        html += '<button rel="tooltip" class="btn btn-danger" title="Xóa" id="confirm-text" onclick="del(' + full['id'] + ')">';
+                    if(user == 1){    
+                        html += '<button rel="tooltip" class="btn btn-danger" title="Xóa" id="confirm-text" onclick="del(' + full['id_hd'] + ')">';
                         html += '<i class="material-icons">close</i>';
-                        html += '</button>';
+                        html += '</button>'; 
                     }
                     return html;
+                
                 },
                 width: 200,
             },
@@ -55,38 +63,61 @@ $(document).ready(function () {
             infoFiltered: "(Lọc từ _MAX_ bản ghi)",
             sInfoEmpty: "Hiển thị 0 đến 0 của 0 bản ghi"
         },
-
        });
     };
-   
-   
+
+    $('.datepicker').datetimepicker({
+        format: 'MM/DD/YYYY',
+        icons: {
+            // time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        },
+    });
    })
+   
 function add(){
     $('#frm')[0].reset();
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Thêm chức vụ mới');
-    $('.icons-chuc-vu .material-icons').html('add');
+    $('.title-hop-dong').html('Thêm hợp đồng mới');
+    $('.icons-hop-dong .material-icons').html('add');
     $('#name').val();
-    $('#salary').val();
-    url = "/chuc-vu/add";
+    $('#salary').val(); 
+    $('#frm')[0].reset();
+    url = "/hop-dong/add";
 
 }
 
 function edit(id){
     $('#add_edit').modal('show');
-    $('.title-chuc-vu').html('Cập nhật chức vụ');
-    $('.icons-chuc-vu .material-icons').html('edit');
+    $('.title-hop-dong').html('Cập nhật hợp đồng');
+    $('.icons-hop-dong .material-icons').html('edit');
     $.ajax({
         type: "get",
-        url: "/chuc-vu/load/"+id,
+        url: "/hop-dong/load/"+id,
         dataType: "json",
         data: {id : id},
         success: function (response) {
             console.log(response);
-            $('#name').val(response.data.ten_chuc_vu);
+            $('#idNv').val(response.data.id_nv).change();
+            $('#idChucVu').val(response.data.id_chuc_vu).change();
+            $('#loaiHD').val(response.data.loai_hop_dong);
+            $('#phucap').val(response.data.phu_cap);
+            $('#chinhanh').val(response.data.chi_nhanh);
+            $('#diachi').val(response.data.dia_diem);
+            $('#startday').val(response.data.ngay_bat_dau);
+            $('#endday').val(response.data.ngay_ket_thuc);
             $('#salary').val(response.data.luong_co_ban);
+            $('#trangthai').val(response.data.trang_thai_hd).change();
 
-            url = "/chuc-vu/edit/"+id;
+
+            url = "/hop-dong/edit/"+id;
         }
     });
 }
@@ -140,6 +171,56 @@ function save(){
 }
 
 
+    // $('#idNv').select2({
+    //     // placeholder: "Chọn khách hàng",
+    //     // dropdownParent: $("#idNv"),
+    //     ajax: {
+    //         url: '/hop-dong/staff',
+    //         dataType: 'json',
+    //         data: function (params) {
+    //             data: params.data
+    //             // var queryParameters = {
+    //             //   search: params.term
+    //             // }
+    //             // return queryParameters;
+    //         }
+    //     }
+    // });
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url:"/hop-dong/staff",
+        success: function (data) {
+            var html = '';
+            data.forEach(function (element, index) {
+                // if (element.selected == true)
+                //     var select = 'selected';
+                html += `<option value="${element.id}">${element.text}</option> `;
+            });
+            $('#idNv').html(html);
+        },
+    });
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        async: false,
+        url:"/hop-dong/role",
+        success: function (data) {
+            var html = '';
+            data.forEach(function (element, index) {
+                // if (element.selected == true)
+                //     var select = 'selected';
+                html += `<option value="${element.id}">${element.text}</option> `;
+            });
+            $('#idChucVu').html(html);
+        },
+    });
+
+  
+
 function del(id){
     swal({
         title: 'Xóa dữ liệu',
@@ -155,8 +236,10 @@ function del(id){
         if(result){
             $.ajax({
                 type: "post",
-                url: "/chuc-vu/del/"+id,
-                data: {id: id},
+                url: "/hop-dong/del/"+id,
+                data: {id: id
+                    // _token: "{{ csrf_token() }}",
+                        },
                 dataType: "json",
                 contentType: false,
                 processData: false,
