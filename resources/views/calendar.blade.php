@@ -6,8 +6,15 @@
             <h3 class="title">Lịch chấm công</h3>
         </div>
         <div class="row" style="margin-left: 200px;">
+            @if(session()->get('id') != 1)
             <button class="btn btn-success" onclick="checkIn()">CheckIn</button>
             <button class="btn btn-warning" onclick="checkOut()">CheckOut</button>
+            @elseif (session()->get('id') == 1)
+            <div class="col-md-3">
+                <select class="selectpicker" id="idNhanVien" name="idNhanVien" data-style="select-with-transition" title="Chọn nhân viên">
+                </select>
+            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">

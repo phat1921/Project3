@@ -38,7 +38,7 @@ class HopDongController extends Controller
     public function load(Request $request, $id)
     {
         // if($request->session()->get('id') != 1){
-        //     return Redirect::route('calendar');
+        //     return Redirect::route('chamcong');
         //     return false;
         //         }
         $hopDong = HopDong::find($id);
@@ -50,7 +50,7 @@ class HopDongController extends Controller
     public function listStaff(Request $request)
     {
         // if($request->session()->get('id') != 1){
-        //     return Redirect::route('calendar');
+        //     return Redirect::route('chamcong');
         //     return false;
         //         }
         $nhanvien = NhanVien::SELECT('id','ten_nv AS text')
@@ -64,7 +64,7 @@ class HopDongController extends Controller
     public function listRole(Request $request)
     {
         // if($request->session()->get('id') != 1){
-        //     return Redirect::route('calendar');
+        //     return Redirect::route('chamcong');
         //     return false;
         //         }
         $chucvu = ChucVu::SELECT('id','ten_chuc_vu AS text','luong_co_ban')->get();
@@ -76,7 +76,7 @@ class HopDongController extends Controller
     public function edit(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('chamcong');
             return false;
                 }
         $idNv =  $request->get('idNv');
@@ -116,7 +116,7 @@ class HopDongController extends Controller
     public function store(Request $request)
     {   
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('chamcong');
             return false;
                 }
        $idNv =  $request->get('idNv');
@@ -155,7 +155,7 @@ class HopDongController extends Controller
     public function del(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('chamcong');
             return false;
                 }
        $hopdong = HopDong::find($id);

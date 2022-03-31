@@ -101,7 +101,10 @@ class IndexController extends Controller
         // $year = (isset($_REQUEST['year']) && ($_REQUEST['year'] != '')) ? $_REQUEST['year'] : date("Y");
         // $year = date('Y');
         // $month = date('m');
-        $idUser = $request->session()->get('id');
+        $id = $request->session()->get('id');
+        $idNV = $request->get('staffId');
+        $idUser = isset($idNV) ? $idNV  : $id;
+        // dd($idUser) ;
         $date = $year . '-' . $month;
         $chamcong = ChamCong::where('ngay', 'like', '%'.$date.'%')
                              ->where('id_nhan_vien', $idUser)
