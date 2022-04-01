@@ -30,7 +30,6 @@ $(document).ready(function () {
             right:'month,agendaWeek,agendaDay'
         },
         events: function(){
-            console.log(staffId);
             // var start = $.fullCalendar.formatDate(start, 'Y-MM-DD');
             // var end = $.fullCalendar.formatDate(end, 'Y-MM-DD ');
              $.ajax({
