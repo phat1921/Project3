@@ -1,16 +1,6 @@
 var nam = '', thang = '';
-var date = new Date();
-var nextDay = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-// prettier-ignore
-var nextMonth = date.getMonth() === 11 ? new Date(date.getFullYear() + 1, 0, 1) : new Date(date.getFullYear(), date.getMonth() + 1, 1);
-// prettier-ignore
-var prevMonth = date.getMonth() === 11 ? new Date(date.getFullYear() - 1, 0, 1) : new Date(date.getFullYear(), date.getMonth() - 1, 1);
-var events = [];
-var direction = 'ltr';
-    // assetPath = baseHome + '/app-assets/';
-if ($('html').data('textdirection') == 'rtl') {
-    direction = 'rtl';
-}
+var events = []
+
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -38,81 +28,6 @@ $(document).ready(function () {
         },
     });
     $('#idNhanVien').val(user).trigger("change");
-
-    // function modifyToggler() {
-    //     $('.fc-sidebarToggle-button')
-    //         .empty()
-    //         .append(feather.icons['menu'].toSvg({ class: 'ficon' }));
-    // }
-
-    function fetchEvents(info, successCallback) {
-        console.log(nam, thang);
-       var staffId =  $('#idNhanVien').val();
-        $.ajax({
-            type: "get",
-            dataType: "json",
-            data: {staffId: staffId, year: nam, month: thang},
-            url: '/index/list',
-            success: function (data) {
-                console.log(data);
-                // return;
-                events = [];
-                if (data.data) {
-                    let i = 0;
-                    data.data.forEach(function (item) {
-                       if (item.gio_vao != '00:00:00' ) {
-                            arr = {
-                                id: item.id,
-                                title: "Giờ vào",
-                                start: new Date(item.ngay + ' ' + item.gio_vao),
-                                end: new Date(item.ngay + ' ' + item.gio_vao),
-                                allDay: false,
-                                // extendedProps: {
-                                //     congid: item.id,
-                                //     checkInTime: new Date(item.ngay + ' ' + item.gio_vao),
-                                //     checkOutTime: new Date(item.ngay + ' ' + item.gio_ra),
-                                //     calendar:1
-                                // }
-                            };
-                            events.push(arr);
-                            i++;
-                      }
-                       if (item.gio_ra != '00:00:00') {
-                            arr = {
-                                id: item.id,
-                                title: "Giờ ra",
-                                start: new Date(item.ngay + ' ' + item.gio_ra),
-                                end: new Date(item.ngay + ' ' + item.gio_ra),
-                                allDay: false,
-                                // extendedProps: {
-                                //     congid: item.id,
-                                //     checkInTime: new Date(item.date + ' ' + item.gio_vao),
-                                //     checkOutTime: new Date(item.date + ' ' + item.gio_ra),
-                                //     calendar:2
-                                // }
-                            };
-                            events.push(arr);
-                            i++;
-                       }
-                    })
-                }
-                //  selectedCalendars();
-                // We are reading event object from app-calendar-events.js file directly by including that file above app-calendar file.
-                // You should make an API call, look into above commented API call for reference
-                // selectedEvents = events.filter(function (event) {
-                //     console.log(event.extendedProps.calendar.toString().toLowerCase());
-                //     return calendars.includes(event.extendedProps.calendar);
-                // });
-             //   if (selectedEvents.length > 0) {
-                    // successCallback(selectedEvents);
-            },
-            error: function () {
-                notify_error('Lỗi truy xuất database');
-            }
-        });
-    
-    };
-
      var calendar = $calendar.fullCalendar({
         // viewRender: function(view, element) {
         //     // We make sure that we activate the perfect scrollbar when the view isn't on Month
@@ -121,7 +36,7 @@ $(document).ready(function () {
         //     }
         // },
         
-        events: fetchEvents,
+        events: fetchEvents(),
         header: {
             left: 'title',
             center: 'month,agendaWeek,agendaDay',
@@ -235,8 +150,74 @@ $(document).ready(function () {
         
     });
     
-    // modifyToggler();
-   
+    function fetchEvents(info, successCallback) {
+        console.log(nam, thang);
+       var staffId =  $('#idNhanVien').val();
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            data: {staffId: staffId, year: nam, month: thang},
+            url: '/index/list',
+            success: function (data) {
+                console.log(data);
+                // return;
+                events = [];
+                if (data.data) {
+                    let i = 0;
+                    data.data.forEach(function (item) {
+                       if (item.gio_vao != '00:00:00' ) {
+                            arr = {
+                                id: item.id,
+                                title: "Giờ vào",
+                                start: new Date(item.ngay + ' ' + item.gio_vao),
+                                end: new Date(item.ngay + ' ' + item.gio_vao),
+                                allDay: false,
+                                // extendedProps: {
+                                //     congid: item.id,
+                                //     checkInTime: new Date(item.ngay + ' ' + item.gio_vao),
+                                //     checkOutTime: new Date(item.ngay + ' ' + item.gio_ra),
+                                //     calendar:1
+                                // }
+                            };
+                            events.push(arr);
+                            i++;
+                      }
+                       if (item.gio_ra != '00:00:00') {
+                            arr = {
+                                id: item.id,
+                                title: "Giờ ra",
+                                start: new Date(item.ngay + ' ' + item.gio_ra),
+                                end: new Date(item.ngay + ' ' + item.gio_ra),
+                                allDay: false,
+                                // extendedProps: {
+                                //     congid: item.id,
+                                //     checkInTime: new Date(item.date + ' ' + item.gio_vao),
+                                //     checkOutTime: new Date(item.date + ' ' + item.gio_ra),
+                                //     calendar:2
+                                // }
+                            };
+                            events.push(arr);
+                            i++;
+                       }
+                    })
+                }
+                 selectedCalendars();
+                // We are reading event object from app-calendar-events.js file directly by including that file above app-calendar file.
+                // You should make an API call, look into above commented API call for reference
+                // selectedEvents = events.filter(function (event) {
+                    // console.log(event.extendedProps.calendar.toLowerCase());
+                    // return calendars.includes(event.extendedProps.calendar);
+                // });
+             //   if (selectedEvents.length > 0) {
+                    // successCallback(selectedEvents);
+            },
+            error: function () {
+                notify_error('Lỗi truy xuất database');
+            }
+        });
+    
+    };
+    calendar.render();
     function selectedCalendars() {
         // var selected = [];
         // $('.calendar-events-filter input:checked').each(function () {
@@ -246,6 +227,7 @@ $(document).ready(function () {
         return [1,2];
     };
     calendar.fullCalendar('render');
+   
 })
 
  

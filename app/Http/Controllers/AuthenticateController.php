@@ -32,7 +32,7 @@ class AuthenticateController extends Controller
                             // }else{ 
                             //     $request->session()->put('idnv',  $admin->id); 
                             //     $request->session()->put('namenv',  $admin->ten_nv); 
-                                return Redirect::route('chamcong'); 
+                                return Redirect::route('calendar'); 
                                 // return Redirect::route('calendar'); 
                             // }
                             

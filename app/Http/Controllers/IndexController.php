@@ -83,19 +83,19 @@ class IndexController extends Controller
 
     public function list(Request $request ){
         $data = [];
-        $getmonth = $request->get('month');
-        $getyear = $request->get('year');
-        if(isset($getmonth) && $getmonth != ''){
-            $month = $getmonth;
-        }else{
-            $month = date('m');
-        }
+        $getStartDay = $request->get('start');
+        $getEndDay = $request->get('end');
+        // if(isset($getmonth) && $getmonth != ''){
+        //     $month = $getmonth;
+        // }else{
+        //     $month = date('m');
+        // }
 
-        if(isset($getyear) && $getyear != ''){
-            $year = $getyear;
-        }else{
-            $year = date('Y');
-        }
+        // if(isset($getyear) && $getyear != ''){
+        //     $year = $getyear;
+        // }else{
+        //     $year = date('Y');
+        // }
         
         // $month = (isset($_REQUEST['month']) && ($_REQUEST['month'] != '')) ? $_REQUEST['month'] : date("m");
         // $year = (isset($_REQUEST['year']) && ($_REQUEST['year'] != '')) ? $_REQUEST['year'] : date("Y");
@@ -105,8 +105,9 @@ class IndexController extends Controller
         $idNV = $request->get('staffId');
         $idUser = isset($idNV) ? $idNV  : $id;
         // dd($idUser) ;
-        $date = $year . '-' . $month;
-        $chamcong = ChamCong::where('ngay', 'like', '%'.$date.'%')
+        // $date = $year . '-' . $month;
+        $chamcong = ChamCong::where('ngay', '>=', $getStartDay)
+                             ->where('ngay', '<=', $getEndDay)
                              ->where('id_nhan_vien', $idUser)
                              ->where('tinh_trang', 1)
                              ->get();

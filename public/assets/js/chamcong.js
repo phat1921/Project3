@@ -31,22 +31,19 @@
 //      assetPath = $('body').attr('data-asset-path');
 //  }
  
- $(document).on('click', '.fc-sidebarToggle-button', function (e) {
-     $('.app-calendar-sidebar, .body-content-overlay').addClass('show');
- });
+//  $(document).on('click', '.fc-sidebarToggle-button', function (e) {
+//      $('.app-calendar-sidebar, .body-content-overlay').addClass('show');
+//  });
  
- $(document).on('click', '.body-content-overlay', function (e) {
-     $('.app-calendar-sidebar, .body-content-overlay').removeClass('show');
- });
+//  $(document).on('click', '.body-content-overlay', function (e) {
+//      $('.app-calendar-sidebar, .body-content-overlay').removeClass('show');
+//  });
  
  document.addEventListener('DOMContentLoaded', function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+   
      var calendarEl = document.getElementById('calendar'),
-         eventToUpdate,
+     
+        //  eventToUpdate,
          sidebar = $('.event-sidebar'),
          calendarsColor = {
              0: '',
@@ -615,112 +612,112 @@
      }
  
      // Add new event
-     $(checkoutBtn).on('click', function () {
-         $.ajax({
-             type: "POST",
-             dataType: "json",
-            // data: {staffIdid: baseUser, ip: user.ip},
-             url: baseHome + '/timekeeping/checkout',
-             success: function (data) {
-                 selectStaff.val(baseUser).trigger("change");
-                 var dataSend = {
-                     type:'checkout',
-                     action:'send',
-                     path:taxCode,
-                     staffId: data.data.staffId,
-                     date:data.data.date,
-                     checkOutTime:data.data.checkOutTime,
-                 };
-                 // console.log(dataSend);
-                 connection.send(JSON.stringify(dataSend));
-                 calendar.refetchEvents();
-                 notyfi_success(data.message);
-             },
-             error: function () {
-                 notify_error('Lỗi truy xuất database');
-             }
-         });
-     });
+//      $(checkoutBtn).on('click', function () {
+//          $.ajax({
+//              type: "POST",
+//              dataType: "json",
+//             // data: {staffIdid: baseUser, ip: user.ip},
+//              url: baseHome + '/timekeeping/checkout',
+//              success: function (data) {
+//                  selectStaff.val(baseUser).trigger("change");
+//                  var dataSend = {
+//                      type:'checkout',
+//                      action:'send',
+//                      path:taxCode,
+//                      staffId: data.data.staffId,
+//                      date:data.data.date,
+//                      checkOutTime:data.data.checkOutTime,
+//                  };
+//                  // console.log(dataSend);
+//                  connection.send(JSON.stringify(dataSend));
+//                  calendar.refetchEvents();
+//                  notyfi_success(data.message);
+//              },
+//              error: function () {
+//                  notify_error('Lỗi truy xuất database');
+//              }
+//          });
+//      });
  
  
-     // Update công
-     updateEventBtn.on('click', function () {
-         if (frmCong.valid()) {
-             var datacong = {
-                 id: congid,
-                 staffId: selectStaff.val(),
-                 date: $('#date').val(),
-                 checkInTime: $('#checkInTime').val(),
-                 checkOutTime: $('#checkOutTime').val()
-             };
-             $.ajax({
-                 type: "POST",
-                 dataType: "json",
-                 data: datacong,
-                 url: baseHome + '/timekeeping/manualTimekeeping',
-                 success: function (data) {
-                     if (data.code == '200') {
-                         calendar.refetchEvents();
-                         sidebar.modal('hide');
-                         notyfi_success(data.message);
-                     } else {
-                         notify_error(data.message);
-                     }
+//      // Update công
+//      updateEventBtn.on('click', function () {
+//          if (frmCong.valid()) {
+//              var datacong = {
+//                  id: congid,
+//                  staffId: selectStaff.val(),
+//                  date: $('#date').val(),
+//                  checkInTime: $('#checkInTime').val(),
+//                  checkOutTime: $('#checkOutTime').val()
+//              };
+//              $.ajax({
+//                  type: "POST",
+//                  dataType: "json",
+//                  data: datacong,
+//                  url: baseHome + '/timekeeping/manualTimekeeping',
+//                  success: function (data) {
+//                      if (data.code == '200') {
+//                          calendar.refetchEvents();
+//                          sidebar.modal('hide');
+//                          notyfi_success(data.message);
+//                      } else {
+//                          notify_error(data.message);
+//                      }
  
-                 },
-                 error: function () {
-                     notify_error('Lỗi truy xuất database');
-                 }
-             });
-         }
-         return false;
-     });
+//                  },
+//                  error: function () {
+//                      notify_error('Lỗi truy xuất database');
+//                  }
+//              });
+//          }
+//          return false;
+//      });
  
-     // Reset sidebar input values
-     function resetValues() {
-         checkInTime.setDate();
-         checkOutTime.setDate();
-         date.setDate();
-         selectCongSang.val('').trigger('change');
-         selectCongChieu.val('').trigger('change');
-         calendarEditor.val('');
-     }
+//      // Reset sidebar input values
+//      function resetValues() {
+//          checkInTime.setDate();
+//          checkOutTime.setDate();
+//          date.setDate();
+//          selectCongSang.val('').trigger('change');
+//          selectCongChieu.val('').trigger('change');
+//          calendarEditor.val('');
+//      }
  
-     // When modal hides reset input values
-     sidebar.on('hidden.bs.modal', function () {
-         resetValues();
-     });
+//      // When modal hides reset input values
+//      sidebar.on('hidden.bs.modal', function () {
+//          resetValues();
+//      });
  
-     // Hide left sidebar if the right sidebar is open
-     // $('.btn-toggle-sidebar').on('click', function () {
-     //     btnDeleteEvent.addClass('d-none');
-     //     updateEventBtn.addClass('d-none');
-     //     checkoutBtn.removeClass('d-none');
-     //     $('.app-calendar-sidebar, .body-content-overlay').removeClass('show');
-     // });
+//      // Hide left sidebar if the right sidebar is open
+//      // $('.btn-toggle-sidebar').on('click', function () {
+//      //     btnDeleteEvent.addClass('d-none');
+//      //     updateEventBtn.addClass('d-none');
+//      //     checkoutBtn.removeClass('d-none');
+//      //     $('.app-calendar-sidebar, .body-content-overlay').removeClass('show');
+//      // });
  
-     // Select all & filter functionality
-     if (selectAll.length) {
-         selectAll.on('change', function () {
-             var $this = $(this);
+//      // Select all & filter functionality
+//      if (selectAll.length) {
+//          selectAll.on('change', function () {
+//              var $this = $(this);
  
-             if ($this.prop('checked')) {
-                 calEventFilter.find('input').prop('checked', true);
-             } else {
-                 calEventFilter.find('input').prop('checked', false);
-             }
-             calendar.refetchEvents();
-         });
-     }
+//              if ($this.prop('checked')) {
+//                  calEventFilter.find('input').prop('checked', true);
+//              } else {
+//                  calEventFilter.find('input').prop('checked', false);
+//              }
+//              calendar.refetchEvents();
+//          });
+//      }
  
-     if (filterInput.length) {
-         filterInput.on('change', function () {
-             $('.input-filter:checked').length < calEventFilter.find('input').length
-                 ? selectAll.prop('checked', false)
-                 : selectAll.prop('checked', true);
-             calendar.refetchEvents();
-         });
-     }
+//      if (filterInput.length) {
+//          filterInput.on('change', function () {
+//              $('.input-filter:checked').length < calEventFilter.find('input').length
+//                  ? selectAll.prop('checked', false)
+//                  : selectAll.prop('checked', true);
+//              calendar.refetchEvents();
+//          });
+//      }
  });
  
  function checkIn(){

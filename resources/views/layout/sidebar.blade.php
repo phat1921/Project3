@@ -50,7 +50,7 @@
         </div>
         <ul class="nav">
             <li class="active">
-                <a href="{{ route('chamcong') }}">
+                <a href="{{ route('calendar') }}">
                     <i class="material-icons"><span class="material-icons">
                         insert_invitation
                         </span></i>

@@ -32,15 +32,15 @@ Route::middleware([CheckLogged::class])->group(function(){
     Route::post('/login-process', [AuthenticateController::class, 'loginProcess'])->name('login-process');  
 });    
 
-// Route::middleware([CheckLogin::class])->group(function(){
-//     Route::get('/calendar', function(){
-//         return view('calendar');
-//     })->name('calendar');
-
 Route::middleware([CheckLogin::class])->group(function(){
-        Route::get('/chamcong', function(){
-            return view('chamcong');
-        })->name('chamcong');
+    Route::get('/calendar', function(){
+        return view('calendar');
+    })->name('calendar');
+
+// Route::middleware([CheckLogin::class])->group(function(){
+//         Route::get('/chamcong', function(){
+//             return view('chamcong');
+//         })->name('chamcong');
 
     Route::get('/logout',[AuthenticateController::class, 'logout'])->name('logout');
 

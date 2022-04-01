@@ -18,7 +18,7 @@ class CheckLogged
     public function handle(Request $request, Closure $next)
     {
         if ($request->session()->exists('id')) {
-            return Redirect::route('chamcong');
+            return Redirect::route('calendar');
         } else {
             return $next($request);
         }

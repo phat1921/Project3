@@ -20,7 +20,6 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/calendars/fullCalendar.min.css" >
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" /> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -116,8 +115,7 @@
         <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
         <script src="{{ asset('assets') }}/js/jasny-bootstrap.min.js"></script>
         <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-        
-        {{-- <script src="{{ asset('assets') }}/js/fullcalendar.min.js"></script> --}}
+        <script src="{{ asset('assets') }}/js/fullcalendar.min.js"></script>
         <!-- Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
         <script src="{{ asset('assets') }}/js/jquery.tagsinput.js"></script>
         <!-- Material Dashboard javascript methods -->
