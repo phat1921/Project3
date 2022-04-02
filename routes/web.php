@@ -76,6 +76,7 @@ Route::middleware([CheckLogin::class])->group(function(){
     Route::post('/hop-dong/edit/{id}', [HopDongController::class, 'edit'])->name('hop-dong-edit');
     Route::post('/hop-dong/del/{id}', [HopDongController::class, 'del'])->name('hop-dong-del');
     Route::get('/hop-dong/staff', [HopDongController::class, 'listStaff'])->name('getStaff');
+    Route::get('/hop-dong/salary', [HopDongController::class, 'getSalary'])->name('getSalary');
     Route::get('/hop-dong/role', [HopDongController::class, 'listRole'])->name('getRole');
 
 

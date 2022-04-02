@@ -214,12 +214,35 @@ function save(){
                 // if (element.selected == true)
                 //     var select = 'selected';
                 html += `<option value="${element.id}">${element.text}</option> `;
+                // $('#salary').append(element.luong_co_ban);
             });
             $('#idChucVu').html(html);
         },
     });
 
-  
+    $('#idChucVu').change(function () {
+        var chucvuId = $(this).val();
+            // $('#task-assigned').attr('disabled', false);
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                data: { chucvuId: chucvuId },
+                async: false,
+                url:"/hop-dong/salary",
+                success: function (data) {
+                    console.log(data);
+                    if (data.data[0]) {
+                       
+                        $('#salary').val(data.data[0].luong_co_ban);
+                    }
+                    else {
+                        alert('iu Trang <3');
+                    }
+                },
+                
+            });
+       
+    })
 
 function del(id){
     swal({

@@ -29,63 +29,7 @@ $(document).ready(function () {
             center:'title',
             right:'month,agendaWeek,agendaDay'
         },
-        events: function(){
-            // var start = $.fullCalendar.formatDate(start, 'Y-MM-DD');
-            // var end = $.fullCalendar.formatDate(end, 'Y-MM-DD ');
-             $.ajax({
-            
-            type: "get",
-            dataType: "json",
-            // data: {staffId: staffId, start: start, end: end},
-            url: '/index/list',
-            success: function (data) {
-                console.log(data);
-                events = [];
-                if (data) {
-                    var i = 0;
-                    data.forEach(function (item) {
-                       if (item.gio_vao != '00:00:00' ) {
-                            arr = {
-                                id: item.id,
-                                title: "Giờ vào",
-                                start: new Date(item.ngay + ' ' + item.gio_vao),
-                                end: new Date(item.ngay + ' ' + item.gio_vao),
-                                allDay: false,
-                                // extendedProps: {
-                                //     congid: item.id,
-                                //     checkInTime: new Date(item.ngay + ' ' + item.gio_vao),
-                                //     checkOutTime: new Date(item.ngay + ' ' + item.gio_ra),
-                                //     calendar:1
-                                // }
-                            };
-                            events.push(arr);
-                            i++;
-                      }
-                       if (item.gio_ra != '00:00:00') {
-                            arr = {
-                                id: item.id,
-                                title: "Giờ ra",
-                                start: new Date(item.ngay + ' ' + item.gio_ra),
-                                end: new Date(item.ngay + ' ' + item.gio_ra),
-                                allDay: false,
-                                // extendedProps: {
-                                //     congid: item.id,
-                                //     checkInTime: new Date(item.date + ' ' + item.gio_vao),
-                                //     checkOutTime: new Date(item.date + ' ' + item.gio_ra),
-                                //     calendar:2
-                                // }
-                            };
-                            events.push(arr);
-                            i++;
-                       }
-                    })
-                }
-            },
-            error: function () {
-                notify_error('Lỗi truy xuất database');
-            }
-        });
-    },
+        events: fetchEvent(),
         selectable:true,
         selectHelper: true,
         dayMaxEvents: 2,
@@ -189,9 +133,8 @@ $(document).ready(function () {
     });
     
     function fetchEvent(){ 
-        // var staffId =  $('#idNhanVien').val();
-        // var start = $.fullCalendar.formatDate(event.start, 'Y-MM-DD');
-        // var end = $.fullCalendar.formatDate(event.end, 'Y-MM-DD ');
+        var start = $.fullCalendar.formatDate(start, 'Y-MM-DD');
+        var end = $.fullCalendar.formatDate(end, 'Y-MM-DD ');
         // console.log(start, end);
         
         $.ajax({

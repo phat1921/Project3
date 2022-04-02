@@ -17,6 +17,7 @@ class IndexController extends Controller
        
         $getUserIp = DiaDiemIp::where('ip',$getIp)
                                 ->join('nhan_vien','nhan_vien.id_dd_truy_cap', '=', 'truy_cap.id')
+                                ->where('nhan_vien.id', $idUser)
                                 ->where('truy_cap.trang_thai', 1)
                                 ->count();
         if($getUserIp == 1){
@@ -83,19 +84,19 @@ class IndexController extends Controller
 
     public function list(Request $request ){
         $data = [];
-        $getStartDay = $request->get('start');
-        $getEndDay = $request->get('end');
-        // if(isset($getmonth) && $getmonth != ''){
-        //     $month = $getmonth;
-        // }else{
-        //     $month = date('m');
-        // }
+        $getmonth = $request->get('month');
+        $getyear = $request->get('year');
+        if(isset($getmonth) && $getmonth != ''){
+            $month = $getmonth;
+        }else{
+            $month = date('m');
+        }
 
-        // if(isset($getyear) && $getyear != ''){
-        //     $year = $getyear;
-        // }else{
-        //     $year = date('Y');
-        // }
+        if(isset($getyear) && $getyear != ''){
+            $year = $getyear;
+        }else{
+            $year = date('Y');
+        }
         
         // $month = (isset($_REQUEST['month']) && ($_REQUEST['month'] != '')) ? $_REQUEST['month'] : date("m");
         // $year = (isset($_REQUEST['year']) && ($_REQUEST['year'] != '')) ? $_REQUEST['year'] : date("Y");
@@ -105,12 +106,12 @@ class IndexController extends Controller
         $idNV = $request->get('staffId');
         $idUser = isset($idNV) ? $idNV  : $id;
         // dd($idUser) ;
-        // $date = $year . '-' . $month;
-        $chamcong = ChamCong::where('ngay', '>=', $getStartDay)
-                             ->where('ngay', '<=', $getEndDay)
+        $date = $year . '-' . $month;
+        $chamcong = ChamCong::where('ngay', 'LIKE', '%'.$date.'%')
                              ->where('id_nhan_vien', $idUser)
                              ->where('tinh_trang', 1)
                              ->get();
+                            //  dd($chamcong);
         $data['data'] = $chamcong;
         echo json_encode($data);
     }

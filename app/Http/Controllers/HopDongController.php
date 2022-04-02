@@ -73,6 +73,21 @@ class HopDongController extends Controller
         // return $hopDong;
     }
 
+    public function getSalary(Request $request)
+    {
+        // if($request->session()->get('id') != 1){
+        //     return Redirect::route('calendar');
+        //     return false;
+        //         }
+        $idChucVu = $request->get('chucvuId');
+        $chucvu = ChucVu::SELECT('luong_co_ban')
+                        ->where('id', $idChucVu)
+                        ->get();
+        $data['data'] = $chucvu;
+        echo json_encode($data);
+        // return $hopDong;
+    }
+
     public function edit(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
