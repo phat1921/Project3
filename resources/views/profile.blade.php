@@ -6,7 +6,7 @@
             <!--      Wizard container        -->
             <div class="wizard-container">
                 <div class="card wizard-card" data-color="rose" id="wizardProfile">
-                    <form action="" method="">
+                    <form action="" method="" enctype="">
                         <!--        You can switch " data-color="purple" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                         <div class="wizard-header">
                             <h3 class="wizard-title">
@@ -37,10 +37,10 @@
                                             <div class="picture">
                                                 <img onerror="this.src='../../assets/img/default-avatar.png'" src="" class="picture-src" id="wizardPicturePreview" title="" />
                                                 <form id="upavatar" enctype="multipart/form-data">
-                                                     <input type="file" name="avatar" id="wizard-picture" onchange="upAvatar()">
+                                                     <input type="file" name="avatar" id="wizard-picture">
                                                 </form>
                                             </div>
-                                            <h6>Choose Picture</h6>
+                                            <h6>Avatar</h6>
                                         </div>
                                     </div>
                                     <form id="frm" enctype="multipart/form-data">
@@ -175,8 +175,8 @@
                         </div>
                         <div class="wizard-footer">
                             <div class="pull-right">
-                                <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' onclick="save()" name='next' value='Lưu' />
-                                <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish' onclick="savepass()" value='Đổi mật khẩu' />
+                                <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' onclick="save()" name='next' value='Lưu' id="btn_save"/>
+                                <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish' onclick="savepass()" value='Đổi mật khẩu' id="btn_save_pass"/>
                             </div>
                             {{-- <div class="pull-left">
                                 <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
@@ -194,10 +194,18 @@
 <script src="{{ asset('assets') }}/js/profile.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        initMaterialWizard();
-        setTimeout(function() {
-            $('.card.wizard-card').addClass('active');
-        }, 600);
+        "use strict";
+
+        let url = '';
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+
+        Profile.init();
     });
 </script>
 @endsection
