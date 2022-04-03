@@ -17,11 +17,12 @@ class ProfileController extends Controller
     {
         $data = [];
         $idUser = $request->session()->get('id');
+
         $profile = NhanVien::where('trang_thai',1)
-                             ->where('id', $idUser)   
-                            ->get();
-        $data['data'] = $profile;
-        echo json_encode($data);
+                            ->where('id', $idUser)   
+                            ->first();
+                            
+        return response()->json(['profile' => $profile], 200);
     }
 
     public function edit(Request $request)
@@ -56,30 +57,36 @@ class ProfileController extends Controller
     }
 
     public function upAvatar(Request $request){
-        // $request->validate([
-        //     'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //   ]);
-          $idUser = $request->session()->get('id');
-         $test = $request->image->extension();
-         dd($test);
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+          ]);
+
+        $filePath = '';
+
+        $idUser = $request->session()->get('id');
+        //$test = $request->image->extension();
           
-          if ($request->file('avatar')) {
-              $imagePath = $request->file('avatar');
-              $imageName = $imagePath->getClientOriginalName();
-  
-              $path = $request->file('avatar')->storeAs('uploads', $imageName, 'public');
-          }
-        //   $image->name = $imageName;
-        $image = NhanVien::find($idUser);
-          $image->anh = '/storage/'.$path;
-          $image->save();
-          if( $image->save()){
-            $json['msg'] = "Cập nhật dữ liệu thành công";
-            $json['code'] = 200;
-        }else{
-            $json['msg'] = "Cập nhật dữ liệu thất bại";
-            $json['code'] = 401; 
+        if ($request->hasFile('avatar')) {
+            $avatarFile = $request->file('avatar');
+
+            $filePath = asset('storage/' . $avatarFile->store('uploads', 'public'));
         }
+
+        //   $image->name = $imageName;
+        $user = NhanVien::find($idUser);
+        $user->anh = $filePath;
+
+        $response = [];
+
+        if($user->save()){
+            $response['msg'] = "Cập nhật dữ liệu thành công";
+            $response['code'] = 200;
+        }else{
+            $response['msg'] = "Cập nhật dữ liệu thất bại";
+            $response['code'] = 401; 
+        }
+
+        return response()->json($response);
     }
 
     public function changePass(Request $request){
@@ -111,4 +118,5 @@ class ProfileController extends Controller
             echo json_encode($json);
     }
 
+    
 }
