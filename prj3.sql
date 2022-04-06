@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2022 at 05:45 PM
+-- Generation Time: Apr 06, 2022 at 02:33 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.0
 
@@ -66,7 +66,14 @@ INSERT INTO `cham_cong` (`id`, `id_nhan_vien`, `ngay`, `gio_vao`, `gio_ra`, `tin
 (1, 2, '2022-03-22', '06:55:47', '07:44:52', 1),
 (2, 3, '2022-03-22', '07:52:23', '16:00:40', 1),
 (4, 2, '2022-03-23', '08:14:03', '15:41:19', 1),
-(5, 2, '2022-03-26', '12:00:46', '20:14:06', 1);
+(5, 2, '2022-03-26', '12:00:46', '20:14:06', 1),
+(6, 2, '2022-04-02', '08:00:00', '18:02:52', 1),
+(7, 2, '2022-04-05', '00:39:09', '00:39:25', 1),
+(9, 2, '2022-04-06', '15:14:25', '16:40:00', 1),
+(10, 2, '2022-06-04', '08:55:00', '12:00:00', 1),
+(12, 2, '2022-07-04', '08:00:00', '18:00:00', 1),
+(14, 2, '2022-04-07', '08:30:00', '18:55:00', 1),
+(15, 3, '2022-04-06', '08:00:00', '17:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -118,8 +125,9 @@ CREATE TABLE `hop_dong_lao_dong` (
 --
 
 INSERT INTO `hop_dong_lao_dong` (`id_hd`, `id_nv`, `loai_hop_dong`, `id_chuc_vu`, `chi_nhanh`, `dia_diem`, `luong_co_ban`, `phu_cap`, `ngay_bat_dau`, `ngay_ket_thuc`, `trang_thai_hd`) VALUES
-(1, 2, 'tesst', 4, 'HN', 'TH', 1000000, 300000, '2022-08-03', '2022-01-04', 1),
-(2, 3, 'tesst23', 5, 'HN', 'TH', 3000000, 100000, '2022-09-03', '2022-09-04', 1);
+(1, 2, 'tesst', 5, 'HN', 'TH', 123123123, 300000, '2022-08-03', '2022-01-04', 1),
+(2, 3, 'tesst23', 1, 'HN', 'TH', 123123, 100000, '2022-09-03', '2022-09-04', 1),
+(3, 2, 'test ajax', 6, 'HN', 'TH', 111111, 300000, '2022-02-04', '1970-01-01', 2);
 
 -- --------------------------------------------------------
 
@@ -134,10 +142,10 @@ CREATE TABLE `luong` (
   `id_nhan_vien` int(11) NOT NULL,
   `cong_chuan` int(11) NOT NULL,
   `cong_thuc_te` int(11) NOT NULL,
-  `luong_co_ban` int(11) NOT NULL,
-  `phu_cap` int(11) NOT NULL,
-  `thuong` int(11) NOT NULL,
-  `ung_truoc` int(11) NOT NULL,
+  `luong_co_ban` float NOT NULL,
+  `phu_cap` float NOT NULL,
+  `thuong` float NOT NULL,
+  `ung_truoc` float NOT NULL,
   `phat_muon` int(11) NOT NULL,
   `tinh_trang` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -149,12 +157,12 @@ CREATE TABLE `luong` (
 INSERT INTO `luong` (`id_bl`, `nam`, `thang`, `id_nhan_vien`, `cong_chuan`, `cong_thuc_te`, `luong_co_ban`, `phu_cap`, `thuong`, `ung_truoc`, `phat_muon`, `tinh_trang`) VALUES
 (7, '2022', '04', 2, 24, 24, 1000000, 300000, 0, 0, 1, 1),
 (8, '2022', '04', 3, 24, 24, 3000000, 100000, 0, 100000, 0, 1),
-(11, '2022', '03', 2, 24, 3, 1000000, 200000, 300000, 0, 1, 2),
-(12, '2022', '03', 3, 24, 1, 3000000, 100000, 0, 0, 0, 2),
 (17, '2022', '02', 2, 24, 0, 1000000, 300000, 0, 0, 0, 2),
 (18, '2022', '02', 3, 24, 0, 3000000, 100000, 0, 0, 0, 2),
 (19, '2022', '05', 2, 24, 0, 1000000, 300000, 0, 0, 0, 1),
-(20, '2022', '05', 3, 24, 0, 3000000, 100000, 0, 0, 0, 1);
+(20, '2022', '05', 3, 24, 0, 3000000, 100000, 0, 0, 0, 1),
+(21, '2022', '03', 2, 24, 24, 111111, 300000, 0, 0, 1, 2),
+(22, '2022', '03', 3, 24, 1, 123123, 100000, 300000, 0, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -190,7 +198,7 @@ CREATE TABLE `nhan_vien` (
 
 INSERT INTO `nhan_vien` (`id`, `ma_nv`, `ten_nv`, `sdt_nv`, `id_luong`, `id_cham_cong`, `id_dd_truy_cap`, `trang_thai`, `ngay_sinh`, `gioi_tinh`, `que_quan`, `quoc_tich`, `dia_chi`, `cmnd`, `anh`, `email`, `hoc_van`, `ten_tk`, `mat_khau`) VALUES
 (1, NULL, 'admin', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', '1'),
-(2, 12, 'Đinh Đại Phát', '0348935101', NULL, NULL, 1, 1, '2001-08-01', 1, 'HN', 'VN', 'TH', '001201004041', NULL, 'vkl704531@gmail.comm', NULL, 'phat', '1'),
+(2, 12, 'Đinh Đại Phát', '0348935101', NULL, NULL, 1, 1, '2001-08-01', 1, 'HN', 'VN', 'TH', '001201004041', 'http://127.0.0.1:8000/storage/uploads/fzsjFL8T0QobajHE2y4d8RDel89V1OgHR4PkWvXC.jpg', 'vkl704531@gmail.comm', NULL, 'phat', '34'),
 (3, 123, 'Nữ', '0357895252', NULL, NULL, 2, 1, '2001-09-01', 2, 'HN', 'VN', 'TH', '003565998745', NULL, 'nu@gmail.com', NULL, 'nu', '1');
 
 -- --------------------------------------------------------
@@ -280,7 +288,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cham_cong`
 --
 ALTER TABLE `cham_cong`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `chuc_vu`
@@ -292,13 +300,13 @@ ALTER TABLE `chuc_vu`
 -- AUTO_INCREMENT for table `hop_dong_lao_dong`
 --
 ALTER TABLE `hop_dong_lao_dong`
-  MODIFY `id_hd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_hd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `luong`
 --
 ALTER TABLE `luong`
-  MODIFY `id_bl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_bl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `nhan_vien`

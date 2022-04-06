@@ -232,7 +232,6 @@ function save(){
                 success: function (data) {
                     console.log(data);
                     if (data.data[0]) {
-                       
                         $('#salary').val(data.data[0].luong_co_ban);
                     }
                     else {

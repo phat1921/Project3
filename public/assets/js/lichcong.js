@@ -186,8 +186,8 @@
                                 allDay: false,
                                 extendedProps: {
                                     congid: item.id,
-                                    checkInTime: new Date(item.date + ' ' + item.gio_vao),
-                                    checkOutTime: new Date(item.date + ' ' + item.gio_ra),
+                                    checkInTime: new Date(item.ngay + ' ' + item.gio_vao),
+                                    checkOutTime: new Date(item.ngay + ' ' + item.gio_ra),
                                     calendar:2
                                 }
                             };
@@ -293,31 +293,31 @@
                  }
              },
          },
-        //  eventClassNames: function ({event: calendarEvent}) {
-        //      const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar];
-        //      if(calendarEvent._def.extendedProps.calendar>0) {
-        //          if (colorName) {
-        //              if (colorName == 'dark') {
-        //                  return [
-        //                      // Background Color
-        //                      'bg-light-' + colorName,
-        //                      'text-white',
-        //                  ];
-        //              } else if (colorName != '') {
-        //                  return [
-        //                      // Background Color
-        //                      'bg-light-' + colorName
-        //                  ];
-        //              }
-        //          } else {
-        //              return [
-        //                  // Background Color
-        //                  'bg-light-primary',
-        //                  'text-white',
-        //              ];
-        //          }
-        //      }
-        //  },
+         eventClassNames: function ({event: calendarEvent}) {
+             const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar];
+             if(calendarEvent._def.extendedProps.calendar>0) {
+                 if (colorName) {
+                     if (colorName == 'dark') {
+                         return [
+                             // Background Color
+                             'bg-light-' + colorName,
+                             'text-white',
+                         ];
+                     } else if (colorName != '') {
+                         return [
+                             // Background Color
+                             'bg-light-' + colorName
+                         ];
+                     }
+                 } else {
+                     return [
+                         // Background Color
+                         'bg-light-primary',
+                         'text-white',
+                     ];
+                 }
+             }
+         },
          dateClick: function (info) {
 
             // updateEventBtn.removeClass('d-none');
@@ -371,9 +371,9 @@
                     window.open(eventToUpdate.url, '_blank');
                 }
                 sidebar.modal('show');
-                date.val(eventToUpdate.start, true, 'Y-m-d');
+                date.val(eventToUpdate.start);
                 congid = eventToUpdate.extendedProps.congid;
-                checkInTime.val(eventToUpdate.extendedProps.checkInTime, true, 'Y-m-d');
+                checkInTime.val(eventToUpdate.extendedProps.checkInTime, true, 'H:mm');
                 checkOutTime.val(eventToUpdate.extendedProps.checkOutTime, true, 'Y-m-d');
              }
              

@@ -29,7 +29,7 @@ class IndexController extends Controller
                 $chamcong->tinh_trang = 1;
                 
                 if(ChamCong::where('id_nhan_vien', $idUser)->where('ngay', $date)->exists()){
-                    $json['msg'] = "Đã chấm công";
+                    $json['msg'] = "Chấm công đã tồn tại";
                     $json['code'] = 401; 
                 }else{
                     if($chamcong->save()){
