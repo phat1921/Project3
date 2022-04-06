@@ -26,7 +26,8 @@ class AuthenticateController extends Controller
                           
                             // if($admin->id == 10){
                                 $request->session()->put('id',  $admin->id); 
-                                $request->session()->put('name',  $admin->ten_nv);  
+                                $request->session()->put('name',  $admin->ten_nv);
+                                $request->session()->put('anh', $admin->anh);  
                             //     return Redirect::route('calendar');
                                 
                             // }else{ 

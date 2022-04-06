@@ -96,6 +96,8 @@ Route::middleware([CheckLogin::class])->group(function(){
     Route::post('/index/checkin', [IndexController::class, 'checkIn'])->name('checkin');
     Route::post('/index/checkout', [IndexController::class, 'checkOut'])->name('checkout');
     Route::get('/index/list', [IndexController::class, 'list'])->name('cham_cong');
+    Route::post('/index/checkdate', [IndexController::class, 'checkdate'])->name('checkdate');
+    Route::post('/index/manualTimekeeping', [IndexController::class, 'manualTimekeeping'])->name('manualTimekeeping');
 
     Route::get('/bang-luong', [BangLuongController::class, 'index'])->name('bangluong');
     Route::get('/bang-luong/list', [BangLuongController::class, 'list'])->name('bang-luong-list');
@@ -106,5 +108,6 @@ Route::middleware([CheckLogin::class])->group(function(){
     Route::post('/bang-luong/uncheck/{id}', [BangLuongController::class, 'uncheck'])->name('bang-luong-uncheck');
     Route::post('/bang-luong/checkbyid/{id}', [BangLuongController::class, 'checkById'])->name('bang-luong-checkbyid');
     Route::get('/bang-luong/search', [BangLuongController::class, 'search'])->name('bang-luong-search');
+    
 });
 

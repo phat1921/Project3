@@ -763,7 +763,7 @@ let Profile = (function () {
         });
     }
 
-    function notify_success(msg) {
+    function notyfi_success(msg) {
         $.notify({
             icon: "notifications",
             message: msg

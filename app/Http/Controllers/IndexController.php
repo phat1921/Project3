@@ -21,7 +21,7 @@ class IndexController extends Controller
                                 ->where('truy_cap.trang_thai', 1)
                                 ->count();
         if($getUserIp == 1){
-            if($timein < '09:00:00'){
+            // if($timein < '09:00:00'){
                 $chamcong = new ChamCong();
                 $chamcong->id_nhan_vien = $idUser;
                 $chamcong->ngay = $date;
@@ -40,10 +40,10 @@ class IndexController extends Controller
                         $json['code'] = 401; 
                     }
                 }
-            }else{
-                $json['msg'] = "Quá giờ chấm công";
-                $json['code'] = 401; 
-            }
+            // }else{
+            //     $json['msg'] = "Quá giờ chấm công";
+            //     $json['code'] = 401; 
+            // }
         }else{
             $json['msg'] = "Sai địa chỉ ip";
             $json['code'] = 401; 
@@ -114,5 +114,82 @@ class IndexController extends Controller
                             //  dd($chamcong);
         $data['data'] = $chamcong;
         echo json_encode($data);
+    }
+
+    public function checkdate(Request $request){
+        $staffId = $request->get('staffId');
+        $date = $request->get('date');
+        if(isset($date)){
+            $date = $date;
+        }else{
+            $date = '';
+        }
+        $chamcong = ChamCong::where('ngay', $date)
+                             ->where('id_nhan_vien', $staffId)
+                             ->where('tinh_trang', 1)
+                             ->count();
+        if ($chamcong == 0) {
+            $jsonObj['mess'] = "Success";
+            $jsonObj['code'] = 200;
+        } else {
+            $jsonObj['msg'] = "Failed";
+            $jsonObj['code'] = 401;
+        }
+        echo json_encode($jsonObj);                     
+    }
+
+    public function manualTimekeeping(Request $request){
+        $id = $request->get('id');
+        if($id == 0){
+            $staffId = $request->get('staffId');
+            $date = $request->get('date');
+            $checkInTime = $request->get('checkInTime');
+            $checkOutTime = $request->get('checkOutTime');
+            if ($checkInTime == '00:00:00' || $checkInTime == '') {
+                $jsonObj['msg'] = "Bạn chưa nhập giờ vào!";
+                $jsonObj['code'] = 402;
+                echo json_encode($jsonObj);
+                return false;
+            }
+            $chamcong = new ChamCong;
+            $chamcong->ngay = date("Y-d-m",strtotime(str_replace('/','-',$date)));
+            $chamcong->id_nhan_vien = $staffId;
+            $chamcong->gio_vao = $checkInTime;
+            $chamcong->gio_ra = $checkOutTime;
+            $chamcong->tinh_trang = 1;
+
+            if( $chamcong->save()){
+                $json['msg'] = "Cập nhật dữ liệu thành công";
+                $json['code'] = 200;
+            }else{
+                $json['msg'] = "Cập nhật dữ liệu thất bại";
+                $json['code'] = 401; 
+            }
+        }else{
+            $staffId = $request->get('staffId');
+            $date = $request->get('date');
+            $checkInTime = $request->get('checkInTime');
+            $checkOutTime = $request->get('checkOutTime');
+            if ($checkInTime == '00:00:00' || $checkInTime == '') {
+                $json['msg'] = "Bạn chưa nhập giờ vào!";
+                $json['code'] = 402;
+                echo json_encode($json);
+                return false;
+            }
+            $chamcong = ChamCong::find($id);
+            $chamcong->ngay = date("Y-d-m",strtotime(str_replace('/','-',$date)));
+            $chamcong->id_nhan_vien = $staffId;
+            $chamcong->gio_vao = $checkInTime;
+            $chamcong->gio_ra = $checkOutTime;
+
+            if( $chamcong->save()){
+                $json['msg'] = "Cập nhật dữ liệu thành công";
+                $json['code'] = 200;
+            }else{
+                $json['msg'] = "Cập nhật dữ liệu thất bại";
+                $json['code'] = 401; 
+            }
+        }
+        echo json_encode($json);
     }
 }

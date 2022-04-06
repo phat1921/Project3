@@ -85,11 +85,11 @@
                     @csrf
                     <div class="form-group label-floating">
                         <label class="control-label">Phụ cấp</label>
-                        <input  id="phucap" name="phucap" class="form-control"/>
+                        <input type="text" id="phucap" name="phucap" class="form-control"/>
                     </div>
                     <div class="form-group label-floating">
                         <label class="control-label">Thưởng</label>
-                        <input type="text" id="thuong" name="thuong"  class="form-control"/>
+                        <input type="text" id="thuong" name="thuong" class="form-control"/>
                     </div>
                     <div class="form-group label-floating">
                       <label class="control-label">Ứng trước</label>

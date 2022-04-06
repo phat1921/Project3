@@ -130,4 +130,6 @@
         </ul>
     </div>
 </div>
+
+{{-- <script src="{{ asset('assets') }}/js/profile.js"></script> --}}
 <!-- end sidebar -->

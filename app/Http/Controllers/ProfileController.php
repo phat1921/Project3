@@ -71,7 +71,6 @@ class ProfileController extends Controller
 
             $filePath = asset('storage/' . $avatarFile->store('uploads', 'public'));
         }
-
         //   $image->name = $imageName;
         $user = NhanVien::find($idUser);
         $user->anh = $filePath;
