@@ -161,7 +161,6 @@ function save(){
                     $('.table').DataTable().ajax.reload(null, false);
                 }else{
                     notify_error(response.msg);
-                    $('#add_edit').modal('hide');
                 }
             }
         });
@@ -231,12 +230,7 @@ function save(){
                 url:"/hop-dong/salary",
                 success: function (data) {
                     console.log(data);
-                    if (data.data[0]) {
                         $('#salary').val(data.data[0].luong_co_ban);
-                    }
-                    else {
-                        alert('iu Trang <3');
-                    }
                 },
                 
             });

@@ -26,7 +26,17 @@ $(document).ready(function () {
                 targets: 0,
                 visible: false,
             },
-
+            {
+                targets: 2,
+                render: function (data, type, full, meta) {
+                    
+                     return (
+                         '<div >' + data.toLocaleString('vi', {style : 'currency', currency : 'VND'}) +'</div>'
+                     );
+ 
+                 }
+    
+            },
             {
                 targets: -1,
                 title:'Thao tác',

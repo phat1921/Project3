@@ -152,7 +152,7 @@ class IndexController extends Controller
                 return false;
             }
             $chamcong = new ChamCong;
-            $chamcong->ngay = date("Y-d-m",strtotime(str_replace('/','-',$date)));
+            $chamcong->ngay = date("Y-m-d",strtotime(str_replace('/','-',$date)));
             $chamcong->id_nhan_vien = $staffId;
             $chamcong->gio_vao = $checkInTime;
             $chamcong->gio_ra = $checkOutTime;
@@ -177,7 +177,7 @@ class IndexController extends Controller
                 return false;
             }
             $chamcong = ChamCong::find($id);
-            $chamcong->ngay = date("Y-d-m",strtotime(str_replace('/','-',$date)));
+            $chamcong->ngay = date("Y-m-d",strtotime(str_replace('/','-',$date)));
             $chamcong->id_nhan_vien = $staffId;
             $chamcong->gio_vao = $checkInTime;
             $chamcong->gio_ra = $checkOutTime;

@@ -42,8 +42,10 @@
              <button type="button" class="btn btn-fill btn-rose" onclick="search()">Tìm kiếm</button>&nbsp
              
         {{-- </form> --}}
+        @if (session()->get('id') == 1)
        <button type="button" class="btn btn-fill btn-rose" onclick="add()">Lập bảng</button>&nbsp
        <button type="button" class="btn btn-fill btn-rose" onclick="checkAll()">Duyệt bảng</button>
+       @endif
     </div>
     
 	<table class="table">
@@ -83,6 +85,10 @@
             <div class="modal-body">
                 <form id="frm" enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group label-floating">
+                      <label class="control-label">Số ngày công</label>
+                      <input type="text" id="ngaycong" name="ngaycong" class="form-control"/>
+                  </div>
                     <div class="form-group label-floating">
                         <label class="control-label">Phụ cấp</label>
                         <input type="text" id="phucap" name="phucap" class="form-control"/>

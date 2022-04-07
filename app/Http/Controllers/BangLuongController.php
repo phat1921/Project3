@@ -94,11 +94,12 @@ class BangLuongController extends Controller
 
             $luongcb = HopDong::select('luong_co_ban')
                                 ->where('id_nv', $id)
+                                ->where('trang_thai_hd', 1)
                                 ->pluck('luong_co_ban');
             $luongcb = str_replace(array('[',']'),"",$luongcb);   
-
             $phucap = HopDong::select('phu_cap')
                                 ->where('id_nv', $id)
+                                ->where('trang_thai_hd', 1)
                                 ->pluck('phu_cap');   
             $phucap = str_replace(array('[',']'),"",$phucap); 
 
@@ -120,6 +121,8 @@ class BangLuongController extends Controller
                     'phat_muon' => $dimuon,
                     'tinh_trang' => 1,
                 ]);
+
+                
                     if( $bangluong->save()){
                         $json['msg'] = "Cập nhật dữ liệu thành công";
                         $json['code'] = 200;
@@ -152,11 +155,13 @@ class BangLuongController extends Controller
             return Redirect::route('calendar');
             return false;
                 }
+       $ngaycong = $request->get('ngaycong');
        $phucap =  str_replace(',', '',$request->get('phucap'));
        $thuong =  str_replace(',', '',$request->get('thuong'));
        $ungtruoc =  str_replace(',', '',$request->get('ungtruoc'));
        $dimuon = $request->get('dimuon');
        $bangluong = BangLuong::find($id);
+       $bangluong->cong_thuc_te = $ngaycong;
        $bangluong->phu_cap = $phucap;
        $bangluong->thuong= $thuong;
        $bangluong->ung_truoc= $ungtruoc;

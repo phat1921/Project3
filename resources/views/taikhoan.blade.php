@@ -46,7 +46,7 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                      <select class="selectpicker" id="truycap" name="truycap[]" multiple data-style="select-with-transition" title="Chọn địa điểm truy cập">
+                      <select class="selectpicker" id="truycap" name="truycap"  data-style="select-with-transition" title="Chọn địa điểm truy cập">
                        
                       </select>
                   </div>

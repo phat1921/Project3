@@ -18,7 +18,11 @@ class AuthenticateController extends Controller
    public function loginProcess(Request $request){
         $username = $request->get('username');
         $password = $request->get('password');
-        
+        $check = NhanVien::select('trang_thai')
+                            ->where('ten_tk', $username)
+                            ->where('mat_khau', $password)
+                            ->get();
+        // if($check == '1'){                    
         try{
             $admin = NhanVien::where('ten_tk', $username)
                             ->where('mat_khau', $password)
@@ -40,6 +44,9 @@ class AuthenticateController extends Controller
         }catch (Exception $e){
             return Redirect::route('login')->with('error', 'Sai tài khoản hoặc mật');
         }
+        // }else{
+        //     return Redirect::route('login')->with('error', 'Tài khoản đã khóa');
+        // }
     }
 
     public function logout(Request $request){

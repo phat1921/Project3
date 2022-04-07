@@ -145,6 +145,16 @@ class HopDongController extends Controller
        $enddate = $request->get('endday');
        $trangthai = $request->get('trangthai');
        
+       $checkHd = HopDong::where('id_nv', $idNv)
+                           ->where('trang_thai_hd', 1)
+                           ->count();
+       if($checkHd == 1){
+            $json['msg'] = "Còn hợp đồng đang thực hiện";
+            $json['code'] = 402;
+            echo json_encode($json);
+            return false;
+       }                    
+
        $hopdong = new HopDong();
        $hopdong->id_nv = $idNv;
        $hopdong->id_chuc_vu = $idChucVu;

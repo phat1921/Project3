@@ -175,7 +175,7 @@
                         </div>
                         <div class="wizard-footer">
                             <div class="pull-right">
-                                <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' onclick="save()" name='next' value='Lưu' id="btn_save"/>
+                                <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' name='next' value='Lưu' id="btn_save"/>
                                 <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish' onclick="savepass()" value='Đổi mật khẩu' id="btn_save_pass"/>
                             </div>
                             {{-- <div class="pull-left">

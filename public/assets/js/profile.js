@@ -666,7 +666,7 @@ let Profile = (function () {
                     dataType: "json",
                     success: function (response) {
                         if (response.code == 200) {
-                            notify_success(response.msg);
+                            notyfi_success(response.msg);
                         } else {
                             notify_error(response.msg);
                         }
@@ -719,7 +719,7 @@ let Profile = (function () {
                     success: function (data) {
                         if (data.code == 200) {
                             console.log(data);
-                            notify_success(data.msg);
+                            notyfi_success(data.msg);
                         } else {
                             notify_error(data.msg);
                         }

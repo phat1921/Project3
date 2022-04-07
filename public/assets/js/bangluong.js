@@ -212,6 +212,7 @@ function edit(id){
         data: {id : id},
         success: function (response) {
             console.log(response);
+            $('#ngaycong').val(response.data.cong_thuc_te);
             $('#phucap').val(Comma(response.data.phu_cap));
             $('#thuong').val(Comma(response.data.thuong));
             $('#ungtruoc').val(Comma(response.data.ung_truoc));
