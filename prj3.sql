@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2022 at 02:33 PM
+-- Generation Time: Apr 08, 2022 at 12:41 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.0
 
@@ -20,28 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `prj3`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `ten` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `sdt` int(11) NOT NULL,
-  `pass` varchar(255) NOT NULL,
-  `trang_thai` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `ten`, `email`, `sdt`, `pass`, `trang_thai`) VALUES
-(1, 'admin', 'admin@gmail.com', 0, '1', 1);
 
 -- --------------------------------------------------------
 
@@ -69,11 +47,24 @@ INSERT INTO `cham_cong` (`id`, `id_nhan_vien`, `ngay`, `gio_vao`, `gio_ra`, `tin
 (5, 2, '2022-03-26', '12:00:46', '20:14:06', 1),
 (6, 2, '2022-04-02', '08:00:00', '18:02:52', 1),
 (7, 2, '2022-04-05', '00:39:09', '00:39:25', 1),
-(9, 2, '2022-04-06', '15:14:25', '16:40:00', 1),
 (10, 2, '2022-06-04', '08:55:00', '12:00:00', 1),
 (12, 2, '2022-07-04', '08:00:00', '18:00:00', 1),
-(14, 2, '2022-04-07', '08:30:00', '18:55:00', 1),
-(15, 3, '2022-04-06', '08:00:00', '17:00:00', 1);
+(14, 2, '2022-04-07', '08:30:00', '14:08:34', 1),
+(15, 3, '2022-04-06', '08:00:00', '17:00:00', 1),
+(16, 2, '2022-04-06', '19:37:17', '19:37:21', 1),
+(17, 5, '2022-01-03', '08:00:00', '18:00:00', 1),
+(18, 5, '2022-02-03', '08:00:00', '20:00:00', 1),
+(19, 5, '2022-03-01', '08:00:00', '16:00:00', 1),
+(20, 5, '2022-03-02', '08:00:00', '18:00:00', 1),
+(21, 5, '2022-03-03', '08:00:00', '20:00:00', 1),
+(22, 5, '2022-03-04', '08:00:00', '20:00:00', 1),
+(23, 5, '2022-03-05', '08:00:00', '20:00:00', 1),
+(24, 5, '2022-04-07', '06:10:00', '06:10:03', 1),
+(25, 2, '2022-06-03', '08:00:00', '16:00:00', 1),
+(26, 2, '2022-06-06', '08:00:00', '20:00:00', 1),
+(27, 3, '2022-06-10', '08:00:00', '20:00:00', 1),
+(28, 3, '2022-06-11', '08:00:00', '20:00:00', 1),
+(29, 6, '2022-04-08', '08:00:00', '16:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -93,12 +84,12 @@ CREATE TABLE `chuc_vu` (
 --
 
 INSERT INTO `chuc_vu` (`id`, `ten_chuc_vu`, `luong_co_ban`, `trang_thai`) VALUES
-(1, 'aaa', 123123, 1),
+(1, 'Cộng tác', 123123, 1),
 (2, 'Trưởng phòng', 25000000, 1),
-(3, 'okokokok', 1, 1),
+(3, 'Test1', 1, 1),
 (4, 'Test2', 13213, 1),
-(5, 'helo', 123123123, 1),
-(6, 'Test', 111111, 1);
+(5, 'Phó phòng', 123123123, 1),
+(6, 'Thử việc', 111111, 1);
 
 -- --------------------------------------------------------
 
@@ -125,9 +116,12 @@ CREATE TABLE `hop_dong_lao_dong` (
 --
 
 INSERT INTO `hop_dong_lao_dong` (`id_hd`, `id_nv`, `loai_hop_dong`, `id_chuc_vu`, `chi_nhanh`, `dia_diem`, `luong_co_ban`, `phu_cap`, `ngay_bat_dau`, `ngay_ket_thuc`, `trang_thai_hd`) VALUES
-(1, 2, 'tesst', 5, 'HN', 'TH', 123123123, 300000, '2022-08-03', '2022-01-04', 1),
+(1, 2, 'tesst', 5, 'HN', 'TH', 123123120, 300000, '2022-08-03', '2022-01-04', 1),
 (2, 3, 'tesst23', 1, 'HN', 'TH', 123123, 100000, '2022-09-03', '2022-09-04', 1),
-(3, 2, 'test ajax', 6, 'HN', 'TH', 111111, 300000, '2022-02-04', '1970-01-01', 2);
+(3, 2, 'test ajax', 6, 'HN', 'TH', 111111, 300000, '2022-02-04', '1970-01-01', 2),
+(4, 5, 'Thực tập', 6, 'HN', 'TH', 111111, 200000, '2022-07-04', '2022-07-05', 2),
+(5, 5, 'chính thức', 2, 'HN', 'TH', 25000000, 200000, '1970-01-01', '1970-01-01', 1),
+(6, 6, 'Thử việc', 1, 'HN', 'TH', 123123, 300000, '2022-08-04', '1970-01-01', 1);
 
 -- --------------------------------------------------------
 
@@ -142,10 +136,10 @@ CREATE TABLE `luong` (
   `id_nhan_vien` int(11) NOT NULL,
   `cong_chuan` int(11) NOT NULL,
   `cong_thuc_te` int(11) NOT NULL,
-  `luong_co_ban` float NOT NULL,
-  `phu_cap` float NOT NULL,
-  `thuong` float NOT NULL,
-  `ung_truoc` float NOT NULL,
+  `luong_co_ban` int(11) NOT NULL,
+  `phu_cap` int(11) NOT NULL,
+  `thuong` int(11) NOT NULL,
+  `ung_truoc` int(11) NOT NULL,
   `phat_muon` int(11) NOT NULL,
   `tinh_trang` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -155,14 +149,24 @@ CREATE TABLE `luong` (
 --
 
 INSERT INTO `luong` (`id_bl`, `nam`, `thang`, `id_nhan_vien`, `cong_chuan`, `cong_thuc_te`, `luong_co_ban`, `phu_cap`, `thuong`, `ung_truoc`, `phat_muon`, `tinh_trang`) VALUES
-(7, '2022', '04', 2, 24, 24, 1000000, 300000, 0, 0, 1, 1),
-(8, '2022', '04', 3, 24, 24, 3000000, 100000, 0, 100000, 0, 1),
 (17, '2022', '02', 2, 24, 0, 1000000, 300000, 0, 0, 0, 2),
 (18, '2022', '02', 3, 24, 0, 3000000, 100000, 0, 0, 0, 2),
 (19, '2022', '05', 2, 24, 0, 1000000, 300000, 0, 0, 0, 1),
 (20, '2022', '05', 3, 24, 0, 3000000, 100000, 0, 0, 0, 1),
-(21, '2022', '03', 2, 24, 24, 111111, 300000, 0, 0, 1, 2),
-(22, '2022', '03', 3, 24, 1, 123123, 100000, 300000, 0, 0, 2);
+(29, '2022', '03', 2, 24, 3, 123123120, 300000, 0, 0, 1, 1),
+(30, '2022', '03', 3, 24, 1, 123123, 100000, 0, 0, 0, 1),
+(31, '2022', '03', 5, 24, 5, 111111, 200000, 0, 0, 0, 1),
+(34, '2022', '06', 2, 24, 3, 123123120, 300000, 0, 0, 1, 1),
+(35, '2022', '06', 3, 24, 2, 123123, 100000, 0, 0, 0, 1),
+(36, '2022', '06', 5, 24, 0, 25000000, 200000, 0, 0, 0, 1),
+(37, '2022', '04', 2, 24, 4, 123123120, 300000, 0, 0, 2, 1),
+(38, '2022', '04', 3, 24, 1, 123123, 100000, 0, 0, 0, 1),
+(39, '2022', '04', 5, 24, 1, 25000000, 200000, 0, 0, 0, 1),
+(40, '2022', '04', 6, 24, 1, 123123, 300000, 0, 0, 0, 1),
+(45, '2022', '11', 2, 24, 0, 123123120, 300000, 0, 0, 0, 1),
+(46, '2022', '11', 3, 24, 0, 123123, 100000, 0, 0, 0, 1),
+(47, '2022', '11', 5, 24, 0, 25000000, 200000, 0, 0, 0, 1),
+(48, '2022', '11', 6, 24, 0, 123123, 300000, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -175,8 +179,6 @@ CREATE TABLE `nhan_vien` (
   `ma_nv` int(11) DEFAULT NULL,
   `ten_nv` varchar(255) DEFAULT NULL,
   `sdt_nv` varchar(11) DEFAULT NULL,
-  `id_luong` int(11) DEFAULT NULL,
-  `id_cham_cong` int(11) DEFAULT NULL,
   `id_dd_truy_cap` int(11) DEFAULT NULL,
   `trang_thai` int(11) DEFAULT NULL,
   `ngay_sinh` date DEFAULT NULL,
@@ -196,10 +198,12 @@ CREATE TABLE `nhan_vien` (
 -- Dumping data for table `nhan_vien`
 --
 
-INSERT INTO `nhan_vien` (`id`, `ma_nv`, `ten_nv`, `sdt_nv`, `id_luong`, `id_cham_cong`, `id_dd_truy_cap`, `trang_thai`, `ngay_sinh`, `gioi_tinh`, `que_quan`, `quoc_tich`, `dia_chi`, `cmnd`, `anh`, `email`, `hoc_van`, `ten_tk`, `mat_khau`) VALUES
-(1, NULL, 'admin', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', '1'),
-(2, 12, 'Đinh Đại Phát', '0348935101', NULL, NULL, 1, 1, '2001-08-01', 1, 'HN', 'VN', 'TH', '001201004041', 'http://127.0.0.1:8000/storage/uploads/fzsjFL8T0QobajHE2y4d8RDel89V1OgHR4PkWvXC.jpg', 'vkl704531@gmail.comm', NULL, 'phat', '34'),
-(3, 123, 'Nữ', '0357895252', NULL, NULL, 2, 1, '2001-09-01', 2, 'HN', 'VN', 'TH', '003565998745', NULL, 'nu@gmail.com', NULL, 'nu', '1');
+INSERT INTO `nhan_vien` (`id`, `ma_nv`, `ten_nv`, `sdt_nv`, `id_dd_truy_cap`, `trang_thai`, `ngay_sinh`, `gioi_tinh`, `que_quan`, `quoc_tich`, `dia_chi`, `cmnd`, `anh`, `email`, `hoc_van`, `ten_tk`, `mat_khau`) VALUES
+(1, NULL, 'admin', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', '1'),
+(2, 12, 'Đinh Đại Phát', '0348935101', 1, 1, '2001-08-01', 1, 'HN', 'VN', 'TH', '001201004041', 'http://127.0.0.1:8000/storage/uploads/fzsjFL8T0QobajHE2y4d8RDel89V1OgHR4PkWvXC.jpg', 'vkl704531@gmail.com', NULL, 'phat', '1'),
+(3, 123, 'Nữ', '0357895252', 2, 1, '2001-09-01', 2, 'HN', 'VN', 'TH', '003565998745', 'http://127.0.0.1:8000/storage/uploads/Rl4CXhf0bkDL105pCdCl93JaywqgqSpLLZmA54J5.jpg', 'nu@gmail.com', NULL, 'nu', '1'),
+(5, 121, 'Nguyễn Văn A', '0230194857', 1, 1, '2022-06-04', 1, 'HN', 'VN', 'TH', '00102004901', NULL, 'nva@gmail.com', NULL, 'nva', '1'),
+(6, 1233, 'Nguyễn Thị B', '0348935102', NULL, 1, '2001-08-04', 2, 'HN', 'VN', 'TH', '001201004042', NULL, 'ntb@gmail.com', NULL, 'ntb', '1');
 
 -- --------------------------------------------------------
 
@@ -227,16 +231,11 @@ INSERT INTO `truy_cap` (`id`, `ten_dia_diem`, `ip`, `trang_thai`) VALUES
 --
 
 --
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `cham_cong`
 --
 ALTER TABLE `cham_cong`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_nhan_vien` (`id_nhan_vien`);
 
 --
 -- Indexes for table `chuc_vu`
@@ -256,7 +255,8 @@ ALTER TABLE `hop_dong_lao_dong`
 -- Indexes for table `luong`
 --
 ALTER TABLE `luong`
-  ADD PRIMARY KEY (`id_bl`);
+  ADD PRIMARY KEY (`id_bl`),
+  ADD KEY `id_nhan_vien` (`id_nhan_vien`);
 
 --
 -- Indexes for table `nhan_vien`
@@ -264,9 +264,7 @@ ALTER TABLE `luong`
 ALTER TABLE `nhan_vien`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `ma_nv` (`ma_nv`),
-  ADD KEY `id_dd_truy_cap` (`id_dd_truy_cap`),
-  ADD KEY `id_luong` (`id_luong`),
-  ADD KEY `id_cham_cong` (`id_cham_cong`);
+  ADD KEY `id_dd_truy_cap` (`id_dd_truy_cap`);
 
 --
 -- Indexes for table `truy_cap`
@@ -279,16 +277,10 @@ ALTER TABLE `truy_cap`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `cham_cong`
 --
 ALTER TABLE `cham_cong`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `chuc_vu`
@@ -300,19 +292,19 @@ ALTER TABLE `chuc_vu`
 -- AUTO_INCREMENT for table `hop_dong_lao_dong`
 --
 ALTER TABLE `hop_dong_lao_dong`
-  MODIFY `id_hd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_hd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `luong`
 --
 ALTER TABLE `luong`
-  MODIFY `id_bl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_bl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `nhan_vien`
 --
 ALTER TABLE `nhan_vien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `truy_cap`
@@ -325,6 +317,12 @@ ALTER TABLE `truy_cap`
 --
 
 --
+-- Constraints for table `cham_cong`
+--
+ALTER TABLE `cham_cong`
+  ADD CONSTRAINT `cham_cong_ibfk_1` FOREIGN KEY (`id_nhan_vien`) REFERENCES `nhan_vien` (`id`);
+
+--
 -- Constraints for table `hop_dong_lao_dong`
 --
 ALTER TABLE `hop_dong_lao_dong`
@@ -332,12 +330,16 @@ ALTER TABLE `hop_dong_lao_dong`
   ADD CONSTRAINT `hop_dong_lao_dong_ibfk_2` FOREIGN KEY (`id_nv`) REFERENCES `nhan_vien` (`id`);
 
 --
+-- Constraints for table `luong`
+--
+ALTER TABLE `luong`
+  ADD CONSTRAINT `luong_ibfk_1` FOREIGN KEY (`id_nhan_vien`) REFERENCES `nhan_vien` (`id`);
+
+--
 -- Constraints for table `nhan_vien`
 --
 ALTER TABLE `nhan_vien`
-  ADD CONSTRAINT `nhan_vien_ibfk_1` FOREIGN KEY (`id_dd_truy_cap`) REFERENCES `truy_cap` (`id`),
-  ADD CONSTRAINT `nhan_vien_ibfk_5` FOREIGN KEY (`id_luong`) REFERENCES `luong` (`id_bl`),
-  ADD CONSTRAINT `nhan_vien_ibfk_6` FOREIGN KEY (`id_cham_cong`) REFERENCES `cham_cong` (`id`);
+  ADD CONSTRAINT `nhan_vien_ibfk_1` FOREIGN KEY (`id_dd_truy_cap`) REFERENCES `truy_cap` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -95,6 +95,7 @@ function edit(id){
     $('#add_edit').modal('show');
     $('.title-nhan-vien').html('Cập nhật thông tin nhân sự');
     $('.icons-nhan-vien .material-icons').html('edit');
+    $('#manv').prop('readonly', true);
     $.ajax({
         type: "get",
         url: "/nhan-vien/load/"+id,
@@ -182,7 +183,6 @@ function save(){
                     $('.table').DataTable().ajax.reload(null, false);
                 }else{
                     notify_error(response.msg);
-                    $('#add_edit').modal('hide');
                 }
             }
         });

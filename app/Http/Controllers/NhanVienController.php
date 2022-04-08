@@ -43,7 +43,6 @@ class NhanVienController extends Controller
             return Redirect::route('calendar');
             return false;
         }
-        $manv = $request->get('manv');
         $name =  $request->get('name');
         $sdt = $request->get('sdt');
         $date = $request->get('date');
@@ -58,29 +57,51 @@ class NhanVienController extends Controller
         $taikhoan = $request->get('taikhoan');
         $matkhau = $request->get('matkhau');
 
-        $nhanvien = NhanVien::find($id);
-        $nhanvien->ma_nv = $manv;
-        $nhanvien->ten_nv = $name;
-        $nhanvien->sdt_nv = $sdt;
-        $nhanvien->ngay_sinh = date("Y-m-d",strtotime(str_replace('/','-',$date)));
-        $nhanvien->gioi_tinh = $gender;
-        $nhanvien->que_quan = $quequan;
-        $nhanvien->quoc_tich = $quoctich;
-        $nhanvien->dia_chi = $diachi;
-        $nhanvien->cmnd = $cmnd;
-        $nhanvien->anh = $anh;
-        $nhanvien->email = $email;
-        $nhanvien->hoc_van = $hocvan;
-        $nhanvien->ten_tk = $taikhoan;
-        $nhanvien->mat_khau = $matkhau;
+        $checkEmail = NhanVien::where('email', $email)
+                                ->where('id', '!=', $id)
+                                ->where('trang_thai',1)
+                                ->count();  
+        $checkSdt = NhanVien::where('sdt_nv', $sdt)
+                                ->where('id', '!=', $id)
+                                ->where('trang_thai',1)
+                                ->count();
+        $checkCmnd = NhanVien::where('cmnd', $cmnd)
+                                ->where('id', '!=', $id)
+                                ->where('trang_thai',1)
+                                ->count();
 
-      
-       if( $nhanvien->save()){
-        $json['msg'] = "Cập nhật dữ liệu thành công";
-        $json['code'] = 200;
-    }else{
-        $json['msg'] = "Cập nhật dữ liệu thất bại";
-        $json['code'] = 401; 
+        if ($checkCmnd ==  1){
+            $json['msg'] = "Số cmnd đã tồn tại";
+            $json['code'] = 401; 
+        }elseif ($checkSdt == 1){
+            $json['msg'] = "Số điện thoại đã tồn tại";
+            $json['code'] = 401; 
+        }elseif ($checkEmail == 1){
+            $json['msg'] = "Địa chỉ Email đã tồn tại";
+            $json['code'] = 401; 
+        }else{                                             
+            $nhanvien = NhanVien::find($id);
+            $nhanvien->ten_nv = $name;
+            $nhanvien->sdt_nv = $sdt;
+            $nhanvien->ngay_sinh = date("Y-m-d",strtotime(str_replace('/','-',$date)));
+            $nhanvien->gioi_tinh = $gender;
+            $nhanvien->que_quan = $quequan;
+            $nhanvien->quoc_tich = $quoctich;
+            $nhanvien->dia_chi = $diachi;
+            $nhanvien->cmnd = $cmnd;
+            $nhanvien->anh = $anh;
+            $nhanvien->email = $email;
+            $nhanvien->hoc_van = $hocvan;
+            $nhanvien->ten_tk = $taikhoan;
+            $nhanvien->mat_khau = $matkhau;
+
+            if( $nhanvien->save()){
+                $json['msg'] = "Cập nhật dữ liệu thành công";
+                $json['code'] = 200;
+            }else{
+                $json['msg'] = "Cập nhật dữ liệu thất bại";
+                $json['code'] = 401; 
+            }
     }
    echo json_encode($json);
     }
@@ -105,31 +126,58 @@ class NhanVienController extends Controller
         $hocvan = $request->get('hocvan');
         $taikhoan = $request->get('taikhoan');
         $matkhau = $request->get('matkhau');
-       
-        $nhanvien = new NhanVien();
-        $nhanvien->ma_nv = $manv;
-        $nhanvien->ten_nv = $name;
-        $nhanvien->sdt_nv = $sdt;
-        $nhanvien->ngay_sinh = date("Y-m-d",strtotime(str_replace('/','-',$date)));
-        $nhanvien->gioi_tinh = $gender;
-        $nhanvien->que_quan = $quequan;
-        $nhanvien->quoc_tich = $quoctich;
-        $nhanvien->dia_chi = $diachi;
-        $nhanvien->cmnd = $cmnd;
-        $nhanvien->anh = $anh;
-        $nhanvien->email = $email;
-        $nhanvien->hoc_van = $hocvan;
-        $nhanvien->ten_tk = $taikhoan;
-        $nhanvien->mat_khau = $matkhau;
-       $nhanvien->trang_thai = 1;
+        
+        $checkMa = NhanVien::where('ma_nv', $manv)
+                             ->where('trang_thai',1)
+                             ->count();
+        $checkEmail = NhanVien::where('email', $email)
+                                ->where('trang_thai',1)
+                                ->count();                     
+        $checkSdt = NhanVien::where('sdt_nv', $sdt)
+                                ->where('trang_thai',1)
+                                ->count();
+        $checkCmnd = NhanVien::where('cmnd', $cmnd)
+                                ->where('trang_thai',1)
+                                ->count();
+        if($checkMa == 1){
+            $json['msg'] = "Mã nhân viên đã tồn tại";
+            $json['code'] = 401; 
+        }elseif ($checkCmnd == 1){
+            $json['msg'] = "Số cmnd đã tồn tại";
+            $json['code'] = 401; 
+        }elseif ($checkSdt == 1){
+            $json['msg'] = "Số điện thoại đã tồn tại";
+            $json['code'] = 401; 
+        }elseif ($checkEmail == 1){
+            $json['msg'] = "Địa chỉ Email đã tồn tại";
+            $json['code'] = 401; 
+        }else{                                                    
+            $nhanvien = new NhanVien();
+            $nhanvien->ma_nv = $manv;
+            $nhanvien->ten_nv = $name;
+            $nhanvien->sdt_nv = $sdt;
+            $nhanvien->ngay_sinh = date("Y-m-d",strtotime(str_replace('/','-',$date)));
+            $nhanvien->gioi_tinh = $gender;
+            $nhanvien->que_quan = $quequan;
+            $nhanvien->quoc_tich = $quoctich;
+            $nhanvien->dia_chi = $diachi;
+            $nhanvien->cmnd = $cmnd;
+            $nhanvien->anh = $anh;
+            $nhanvien->email = $email;
+            $nhanvien->hoc_van = $hocvan;
+            $nhanvien->ten_tk = $taikhoan;
+            $nhanvien->mat_khau = $matkhau;
+            $nhanvien->trang_thai = 1;
 
-       if( $nhanvien->save()){
-        $json['msg'] = "Cập nhật dữ liệu thành công";
-        $json['code'] = 200;
-    }else{
-        $json['msg'] = "Cập nhật dữ liệu thất bại";
-        $json['code'] = 401; 
-    }
+        if($nhanvien->save()){
+            $json['msg'] = "Cập nhật dữ liệu thành công";
+            $json['code'] = 200;
+        }else{
+            $json['msg'] = "Cập nhật dữ liệu thất bại";
+            $json['code'] = 401; 
+        }
+        }
+      
    echo json_encode($json);
     }
 
@@ -226,22 +274,28 @@ class NhanVienController extends Controller
         $tenTk = $request->get('tenTk');
         $truycap = $request->get('truycap');
         $matkhau = $request->get('password');
-        // $getip = '';
-        // if(count($truycap) > 0){
-        //     $getip = implode(",", $truycap);
-        // }
-       
-        $taikhoan = NhanVien::find($id);
-        $taikhoan->id_dd_truy_cap = $truycap;
-        $taikhoan->ten_tk = $tenTk;
-        $taikhoan->mat_khau = $matkhau;
 
-        if( $taikhoan->save()){
-            $json['msg'] = "Cập nhật dữ liệu thành công";
-            $json['code'] = 200;
-        }else{
-            $json['msg'] = "Cập nhật dữ liệu thất bại";
+        $checkUserName = NhanVien::where('trang_thai',1)
+                                ->where('id', '!=', $id)
+                                ->where('ten_tk', $tenTk)
+                                ->count();
+       
+        if($checkUserName == 1){
+            $json['msg'] = "Tên tài khoản đã tồn tại";
             $json['code'] = 401; 
+        }else{    
+            $taikhoan = NhanVien::find($id);
+            $taikhoan->id_dd_truy_cap = $truycap;
+            $taikhoan->ten_tk = $tenTk;
+            $taikhoan->mat_khau = $matkhau;
+
+            if( $taikhoan->save()){
+                $json['msg'] = "Cập nhật dữ liệu thành công";
+                $json['code'] = 200;
+            }else{
+                $json['msg'] = "Cập nhật dữ liệu thất bại";
+                $json['code'] = 401; 
+            }
         }
         echo json_encode($json);
     }
@@ -257,19 +311,34 @@ class NhanVienController extends Controller
         $tenTk = $request->get('tenTk');
         $matkhau = $request->get('password');
        
-        // $taikhoan = new NhanVien();
-        $taikhoan = NhanVien::find($id);
-        $taikhoan->id_dd_truy_cap = $truycap;
-        $taikhoan->ten_tk = $tenTk;
-        $taikhoan->mat_khau = $matkhau;
+        $checkUserName = NhanVien::where('trang_thai',1)
+                                  ->where('ten_tk', $tenTk)
+                                  ->count();
+        $checkAcc = NhanVien::where('trang_thai',1)
+                             ->where('id', $id)
+                             ->where('ten_tk', '=', NULL)
+                             ->count();
 
-        if( $taikhoan->save()){
-            $json['msg'] = "Cập nhật dữ liệu thành công";
-            $json['code'] = 200;
-        }else{
-            $json['msg'] = "Cập nhật dữ liệu thất bại";
+        if($checkUserName == 1){
+            $json['msg'] = "Tên tài khoản đã tồn tại";
             $json['code'] = 401; 
-        }
+        }elseif ($checkAcc == 0){
+            $json['msg'] = "Đã có tài khoản";
+            $json['code'] = 401;
+        }else{
+            $taikhoan = NhanVien::find($id);
+            $taikhoan->id_dd_truy_cap = $truycap;
+            $taikhoan->ten_tk = $tenTk;
+            $taikhoan->mat_khau = $matkhau;
+
+            if( $taikhoan->save()){
+                $json['msg'] = "Cập nhật dữ liệu thành công";
+                $json['code'] = 200;
+            }else{
+                $json['msg'] = "Cập nhật dữ liệu thất bại";
+                $json['code'] = 401; 
+            }
+        }    
         echo json_encode($json);
     }
 
