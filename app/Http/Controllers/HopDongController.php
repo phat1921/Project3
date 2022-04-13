@@ -105,6 +105,13 @@ class HopDongController extends Controller
        $enddate = $request->get('endday');
        $trangthai = $request->get('trangthai');
 
+       if($startday > $enddate){
+        $json['msg'] = "Ngày kết thúc không thể nhỏ hơn ngày bắt đầu";
+        $json['code'] = 402;
+        echo json_encode($json);
+        return false;
+       }       
+
        $hopdong = HopDong::find($id);
        $hopdong->id_nv = $idNv;
        $hopdong->id_chuc_vu = $idChucVu;
@@ -139,8 +146,8 @@ class HopDongController extends Controller
        $loaiHD = $request->get('loaiHD');
        $chinhanh = $request->get('chinhanh');
        $diachi = $request->get('diachi');
-       $salary = $request->get('salary');
-       $phucap = $request->get('phucap');
+       $salary = str_replace(',', '',$request->get('salary'));
+       $phucap =  str_replace(',', '',$request->get('phucap'));
        $startday = $request->get('startday');
        $enddate = $request->get('endday');
        $trangthai = $request->get('trangthai');
@@ -148,6 +155,12 @@ class HopDongController extends Controller
        $checkHd = HopDong::where('id_nv', $idNv)
                            ->where('trang_thai_hd', 1)
                            ->count();
+       if($startday > $enddate){
+        $json['msg'] = "Ngày kết thúc không thể nhỏ hơn ngày bắt đầu";
+        $json['code'] = 402;
+        echo json_encode($json);
+        return false;
+       }                    
        if($checkHd == 1){
             $json['msg'] = "Còn hợp đồng đang thực hiện";
             $json['code'] = 402;

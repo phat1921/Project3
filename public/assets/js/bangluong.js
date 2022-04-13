@@ -86,7 +86,7 @@ $(document).ready(function () {
                     var $ngaymuon = full['phat_muon'];
  
                      if($ngaymuon > 0){
-                         var $phat = $ngaymuon * 100000;
+                         var $phat = $ngaymuon * 50000;
                      }else{
                          $phat = 0;
                      }
@@ -110,13 +110,17 @@ $(document).ready(function () {
                    var $ngaymuon = full['phat_muon'];
 
                     if($ngaymuon > 0){
-                        var $phat = $ngaymuon * 100000;
+                        var $phat = $ngaymuon * 50000;
                     }else{
                         $phat = 0;
                     }
 
                     $thuclinh = ((($luongcb + $phucap)/$congchuan) * $congtt) + $thuong - $phat - $ungtruoc;
-
+                    if($thuclinh > 0){
+                       $thuclinh = $thuclinh; 
+                    }else{
+                        $thuclinh = 0;
+                    }
                     return (
                         '<div >' +$thuclinh.toLocaleString('vi', {style : 'currency', currency : 'VND'}) +'</div>'
                     );

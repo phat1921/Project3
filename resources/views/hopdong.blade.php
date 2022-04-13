@@ -93,7 +93,7 @@
                   <div class="col-md-6">
                     <div class="form-group label-floating">
                       <label class="control-label">Ngày bắt đầu</label>
-                      <input type="text" id="startday" name="startday" class="form-control datepicker"/>
+                      <input type="text" id="startday" name="startday"z class="form-control datepicker"/>
                   </div>
                   </div>
               </div>

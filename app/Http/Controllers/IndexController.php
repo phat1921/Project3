@@ -21,7 +21,7 @@ class IndexController extends Controller
                                 ->where('truy_cap.trang_thai', 1)
                                 ->count();
         if($getUserIp == 1){
-            // if($timein < '09:00:00'){
+            if($timein < '09:00:00'){
                 $chamcong = new ChamCong();
                 $chamcong->id_nhan_vien = $idUser;
                 $chamcong->ngay = $date;
@@ -40,10 +40,10 @@ class IndexController extends Controller
                         $json['code'] = 401; 
                     }
                 }
-            // }else{
-            //     $json['msg'] = "Quá giờ chấm công";
-            //     $json['code'] = 401; 
-            // }
+            }else{
+                $json['msg'] = "Quá giờ chấm công";
+                $json['code'] = 401; 
+            }
         }else{
             $json['msg'] = "Sai địa chỉ ip";
             $json['code'] = 401; 
@@ -57,10 +57,19 @@ class IndexController extends Controller
         $date = date("Y-m-d");
         $idUser = $request->session()->get('id');
         $timeout = date("H:i:s");
+        $getIp = request()->ip();
 
         $congvao = ChamCong::where('id_nhan_vien', $idUser)
                             ->where('ngay', $date)
                             ->count();
+
+        $getUserIp = DiaDiemIp::where('ip',$getIp)
+                            ->join('nhan_vien','nhan_vien.id_dd_truy_cap', '=', 'truy_cap.id')
+                            ->where('nhan_vien.id', $idUser)
+                            ->where('truy_cap.trang_thai', 1)
+                            ->count();
+    if($timeout >= '05:00:00'){
+    if($getUserIp == 1){                    
         if($congvao == 1){
             $chamcong = ChamCong::where('id_nhan_vien', $idUser)
             ->where('ngay', $date)
@@ -77,7 +86,15 @@ class IndexController extends Controller
         }else{
             $json['msg'] = "Chưa checkin";
             $json['code'] = 401; 
-        }                    
+        }    
+        }else{
+            $json['msg'] = "Sai địa chỉ ip";
+            $json['code'] = 401; 
+        }  
+     }else{
+        $json['msg'] = "Không thể chấm công";
+        $json['code'] = 401; 
+     }                      
         
        echo json_encode($json);
     }
@@ -147,6 +164,12 @@ class IndexController extends Controller
             $checkOutTime = $request->get('checkOutTime');
             if ($checkInTime == '00:00:00' || $checkInTime == '') {
                 $jsonObj['msg'] = "Bạn chưa nhập giờ vào!";
+                $jsonObj['code'] = 402;
+                echo json_encode($jsonObj);
+                return false;
+            }
+            if($checkInTime < $checkOutTime){
+                $jsonObj['msg'] = "Giờ ra không thể nhỏ hơn giờ vào!";
                 $jsonObj['code'] = 402;
                 echo json_encode($jsonObj);
                 return false;

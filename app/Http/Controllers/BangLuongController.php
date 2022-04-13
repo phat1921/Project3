@@ -74,22 +74,31 @@ class BangLuongController extends Controller
                 }
         $nam = $request->get('nam');
         $thang = $request->get('thang');
+        $workdays = array();
+        $type = CAL_GREGORIAN;
+        $day_count = cal_days_in_month($type, $thang, $nam); // Get the amount of days
+        for ($i = 1; $i <= $day_count; $i++) {
+
+            $date = $nam.'/'.$thang.'/'.$i; //format date
+            $get_name = date('l', strtotime($date)); //get week day
+            $day_name = substr($get_name, 0, 3); // Trim day name to 3 chars
+    
+            //if not a weekend add day to array
+            if($day_name != 'Sun' && $day_name != 'Sat'){
+                $workdays[] = $i;
+            }
+    }
+        $congchuan = count($workdays);
         $ngay = $nam.'-'.$thang;
         $iduser = NhanVien::select('id')
                             ->where('id','>',1)
                             ->where('trang_thai', '>', 0)
                             ->get();
-         
-        $checkexist = BangLuong::where('nam', $nam)
-                            ->where('thang', $thang)
-                            ->where('tinh_trang', '>=', 1)
-                            ->count();
-                
-        if($checkexist == 0){
         foreach($iduser as $user){
             $id = $user['id'];
             $congtt = ChamCong::where('id_nhan_vien', $id)
                                 ->where('ngay', 'like','%'. $ngay . '%')
+                                ->where('gio_ra', '!=', NULL)
                                 ->count();
 
             $luongcb = HopDong::select('luong_co_ban')
@@ -97,6 +106,7 @@ class BangLuongController extends Controller
                                 ->where('trang_thai_hd', 1)
                                 ->pluck('luong_co_ban');
             $luongcb = str_replace(array('[',']'),"",$luongcb);   
+
             $phucap = HopDong::select('phu_cap')
                                 ->where('id_nv', $id)
                                 ->where('trang_thai_hd', 1)
@@ -105,14 +115,27 @@ class BangLuongController extends Controller
 
             $dimuon = ChamCong::where('id_nhan_vien', $id)
                                     ->where('ngay', 'like','%'. $ngay . '%')
-                                    ->where('gio_vao','>','08:15:00')
+                                    ->where('gio_vao','>','08:30:00')
                                     ->count();
-           
+            $checkBl = BangLuong::select('id_bl')
+                                  ->where('nam', $nam)
+                                  ->where('thang', $thang)
+                                  ->where('id_nhan_vien', $id)
+                                  ->pluck('id_bl');
+            $checkBl = str_replace(array('[',']'),"",$checkBl);                       
+            if($checkBl != ''){
+                $bangluong = BangLuong::find($checkBl);
+                $bangluong->cong_thuc_te = $congtt;
+                $bangluong->luong_co_ban = $luongcb;
+                $bangluong->phu_cap = $phucap;
+                $bangluong->phat_muon = $dimuon;
+
+            }else{
                 $bangluong = BangLuong::create([
                     'id_nhan_vien' => $id,
                     'nam' => $nam,
                     'thang' => $thang,
-                    'cong_chuan' => 24,
+                    'cong_chuan' => $congchuan,
                     'cong_thuc_te' => $congtt,
                     'luong_co_ban' => $luongcb,
                     'phu_cap' => $phucap,
@@ -121,20 +144,16 @@ class BangLuongController extends Controller
                     'phat_muon' => $dimuon,
                     'tinh_trang' => 1,
                 ]);
-
-                
-                    if( $bangluong->save()){
-                        $json['msg'] = "Cập nhật dữ liệu thành công";
-                        $json['code'] = 200;
-                    }else{
-                        $json['msg'] = "Cập nhật dữ liệu thất bại";
-                        $json['code'] = 401; 
-                    }
+            }   
+            if( $bangluong -> save() || $bangluong == true){
+                $json['msg'] = "Cập nhật dữ liệu thành công";
+                $json['code'] = 200;
+            }else{
+                $json['msg'] = "Cập nhật dữ liệu thất bại";
+                $json['code'] = 401; 
+            }
         }
-    }else{
-        $json['msg'] = "Bảng lương ".$thang."/".$nam." đã tồn tại";
-        $json['code'] = 401; 
-}        
+       
         echo json_encode($json);
     }
 
