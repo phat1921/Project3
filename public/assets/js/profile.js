@@ -414,7 +414,6 @@ let Profile = (function () {
             }
         });
         let idUser = user;
-        console.log(idUser);
         $.ajax({
             type: "get",
             url: "/profile/list",

@@ -37,7 +37,7 @@ class AuthenticateController extends Controller
                             // }else{ 
                             //     $request->session()->put('idnv',  $admin->id); 
                             //     $request->session()->put('namenv',  $admin->ten_nv); 
-                                return Redirect::route('calendar'); 
+                                return Redirect::route('dashboard'); 
                                 // return Redirect::route('calendar'); 
                             // }
                             

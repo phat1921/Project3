@@ -37,7 +37,7 @@ $(document).ready(function () {
                {data: "ung_truoc"},
                {},
                {},
-               {data: "tinh_trang"}
+            //    {data: "tinh_trang"}
                
            ],
            columnDefs: [
@@ -127,10 +127,10 @@ $(document).ready(function () {
 
                 }
             },
-            {
-                targets: -1,
-                visible:false,
-            },
+            // {
+            //     targets: -1,
+            //     visible:false,
+            // },
         ],
         order: [[0, 'desc']],
         language: {

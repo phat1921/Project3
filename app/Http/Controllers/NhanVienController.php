@@ -27,7 +27,7 @@ class NhanVienController extends Controller
     public function load(Request $request ,$id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
             
         }
@@ -40,7 +40,7 @@ class NhanVienController extends Controller
     public function edit(Request $request, $id)
     {   
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         $name =  $request->get('name');
@@ -109,7 +109,7 @@ class NhanVienController extends Controller
     public function store(Request $request)
     {   
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
        $manv = $request->get('manv');
@@ -184,7 +184,7 @@ class NhanVienController extends Controller
     public function del(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar'); 
+            return Redirect::route('dashboard'); 
             return false;
                 }
        $nhanvien = NhanVien::find($id);
@@ -204,7 +204,7 @@ class NhanVienController extends Controller
     public function taikhoan(Request $request)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         return view('taikhoan');
@@ -212,7 +212,7 @@ class NhanVienController extends Controller
 
     public function getTK(Request $request){
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         $data = [];
@@ -228,7 +228,7 @@ class NhanVienController extends Controller
     public function loadTK(Request $request,$id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         $taikhoan = NhanVien::where('trang_thai',1)->find($id);
@@ -240,7 +240,7 @@ class NhanVienController extends Controller
     public function listStaff(Request $request)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         $nhanvien = NhanVien::SELECT('id','ten_nv AS text','ten_tk','mat_khau')
@@ -255,7 +255,7 @@ class NhanVienController extends Controller
     public function listIp(Request $request)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         $truycap = DiaDiemIp::SELECT('id','ten_dia_diem AS text')
@@ -268,7 +268,7 @@ class NhanVienController extends Controller
 
     public function editTK(Request $request, $id){
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         $tenTk = $request->get('tenTk');
@@ -303,7 +303,7 @@ class NhanVienController extends Controller
     
     public function addTK(Request $request){
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar');
+            return Redirect::route('dashboard');
             return false;
         }
         $id =  $request->get('idNv');
@@ -345,7 +345,7 @@ class NhanVienController extends Controller
     public function delTK(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('calendar'); 
+            return Redirect::route('dashboard'); 
             return false;
                 }
        $taikhoan = NhanVien::find($id);

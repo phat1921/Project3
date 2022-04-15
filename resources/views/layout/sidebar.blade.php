@@ -15,12 +15,12 @@
                 <img onerror="this.src='../../assets/img/default-avatar.png'" src="{{ Session::get('anh') }}" />
             </div>
             <div class="info">
-                <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                <a  href="{{ route('profile') }}" class="collapsed">
                     <span>
                         @if (Session::exists('name'))
                         {{ Session::get('name') }}
                     @endif 
-                        <b class="caret"></b>
+                        {{-- <b class="caret"></b> --}}
                     </span>
                 </a>
                 <div class="clearfix"></div>
@@ -50,11 +50,11 @@
         </div>
         <ul class="nav">
             <li class="active">
-                <a href="{{ route('calendar') }}">
+                <a href="{{ route('dashboard') }}">
                     <i class="material-icons"><span class="material-icons">
                         insert_invitation
                         </span></i>
-                    <p> Calendar </p>
+                    <p> Dashbroad </p>
                 </a>
             </li>
             @if (Session::get('id') == 1)
@@ -103,6 +103,14 @@
             </li> 
             @endif
             
+            <li>
+                <a href="{{ route('calendar') }}">
+                    <i class="material-icons"><span class="material-icons">
+                        insert_invitation
+                        </span></i>
+                    <p> Quản lý chấm công </p>
+                </a>
+            </li>
             <li>
                 <a href="{{ route('nhanvien') }}">
                     <i class="material-icons">

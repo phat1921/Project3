@@ -17,7 +17,6 @@
             <th>Trạng thái</th>
             <th>Thao tác</th>
             <th></th>
-            <th></th>
 		</thead>
 	</table>
 		</div>
@@ -134,23 +133,4 @@
 <script src="{{ asset('assets') }}/js/hopdong.js"></script>
 {{-- <script src="{{ asset('assets') }}/js/lib.js"></script> --}}
 
-<script>
-   var CSRF_TOKEN =  $('meta[name="csrf_token"]').attr('content');
-   $(document).ready(function () {
-      $('#idNv').select2({
-          $.ajax({
-            url: "{{ route('getStaff') }}",
-            type:'post'
-            dataType: "json",
-            data: function(params){
-              return{
-                _token: CSRF_TOKEN,
-                
-              }
-            },
-       
-          });
-      }); 
-   });
-</script>
 @endsection

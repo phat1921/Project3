@@ -61,7 +61,6 @@
             <th>Ứng trước</th>
             <th>Phạt</th>
             <th></th>
-            <th></th>
 		</thead>
 	</table>
 		</div>

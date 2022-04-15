@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\BangLuongController;
 use App\Http\Controllers\ChucVuController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiaDiemIpController;
 use App\Http\Controllers\HopDongController;
 use App\Http\Controllers\IndexController;
@@ -33,14 +34,16 @@ Route::middleware([CheckLogged::class])->group(function(){
 });    
 
 Route::middleware([CheckLogin::class])->group(function(){
-    Route::get('/calendar', function(){
-        return view('calendar');
-    })->name('calendar');
+    Route::get('/dashboard', [DashboardController::class, 'static'])->name('dashboard');
+    Route::get('/dashboard/list', [DashboardController::class, 'list'])->name('list');
 
 // Route::middleware([CheckLogin::class])->group(function(){
 //         Route::get('/chamcong', function(){
 //             return view('chamcong');
 //         })->name('chamcong');
+    Route::get('/calendar',function(){
+        return view('calendar');
+    })->name('calendar');
 
     Route::get('/logout',[AuthenticateController::class, 'logout'])->name('logout');
 
