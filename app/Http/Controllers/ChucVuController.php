@@ -11,7 +11,7 @@ class ChucVuController extends Controller
     public function index(Request $request)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         return view('ChucVu');
@@ -20,7 +20,7 @@ class ChucVuController extends Controller
     public function list(Request $request)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         $data = [];
@@ -32,7 +32,7 @@ class ChucVuController extends Controller
     public function load(Request $request,$id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         $chucVu = ChucVu::where('trang_thai',1)->find($id);
@@ -44,7 +44,7 @@ class ChucVuController extends Controller
     public function edit(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         $name =  $request->get('name');
@@ -66,7 +66,7 @@ class ChucVuController extends Controller
     public function store(Request $request)
     {   
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
        $name =  $request->get('name');
@@ -89,7 +89,7 @@ class ChucVuController extends Controller
     public function del(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
        $chucvu = ChucVu::find($id);

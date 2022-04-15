@@ -24,11 +24,41 @@ $(window).on('load', function () {
           dark: '#4b4b4b1a'
         }
       };
+
+     
     var $statisticsProfitChart = document.querySelector('#statistics-profit-chart');
+    var $pieProfitChart = document.querySelector('#pie-profit-chart');
     var statisticsProfitChartOptions;
+    var pieProfitChartOptions;
     var statisticsProfitChart;
+    var pieProfitChart;
     var $trackBgColor = '#EBEBEB';
     var arrMonth = [];
+    var arrLate = [];
+    var arrRole = [];
+    var arrCount = [];
+
+    $.ajax({
+        type: 'get',
+        url: 'dashboard/chartlate',
+        dataType: "json",
+        async: false,
+        success: function (response) {
+          arrLate = response.arrLate;
+          arrMonth = response.arrMonth;
+        }
+    });
+
+    $.ajax({
+        type: 'get',
+        url: 'dashboard/chartrole',
+        dataType: "json",
+        async: false,
+        success: function (response) {
+          arrRole = response.arrRole;
+          arrCount = response.arrCount;
+        }
+    });
 
     statisticsProfitChartOptions = {
         chart: {
@@ -65,8 +95,8 @@ $(window).on('load', function () {
           colors: [window.colors.solid.info],
           series: [
             {
-              name: "Số khách hàng mới",
-              data: [1, 3, 2, 0, 5, 9, 10, 7, 1],
+              name: "Tổng số đi làm muộn",
+              data: arrLate,
             }
           ],
           markers: {
@@ -92,7 +122,7 @@ $(window).on('load', function () {
             }
           },
           xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            categories: arrMonth,
             labels: {
               show: true,
               style: {
@@ -117,6 +147,28 @@ $(window).on('load', function () {
       };
       statisticsProfitChart = new ApexCharts($statisticsProfitChart, statisticsProfitChartOptions);
       statisticsProfitChart.render();
+
+      pieProfitChartOptions = {
+        series: arrCount,
+          chart: {
+          width: 350,
+          type: 'pie',
+        },
+        labels: arrRole,
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      };
+      pieProfitChart = new ApexCharts($pieProfitChart, pieProfitChartOptions);
+      pieProfitChart.render();
 });    
 $(document).ready(function () {
     "use strict";

@@ -2,10 +2,10 @@
   <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{ asset('assets') }}/img/sidebar-1.jpg">
      
     <div class="logo">
-        <a href="#" class="simple-text logo-mini" style="width: 45px;">
+        <a href="{{ route('dashboard') }}" class="simple-text logo-mini" style="width: 45px;">
         PRJ3
         </a>
-        <a href="#" class="simple-text logo-normal">
+        <a href="{{ route('dashboard') }}" class="simple-text logo-normal">
             BKD02K11
         </a>
     </div>
@@ -49,15 +49,16 @@
             </div>
         </div>
         <ul class="nav">
+             @if (Session::get('id') == 1)
             <li class="active">
                 <a href="{{ route('dashboard') }}">
                     <i class="material-icons"><span class="material-icons">
-                        insert_invitation
+                        dashboard
                         </span></i>
                     <p> Dashbroad </p>
                 </a>
             </li>
-            @if (Session::get('id') == 1)
+           
             <li>
                 <a data-toggle="collapse" href="#pagesExamples">
                     <i class="material-icons">settings</i>
@@ -106,7 +107,7 @@
             <li>
                 <a href="{{ route('calendar') }}">
                     <i class="material-icons"><span class="material-icons">
-                        insert_invitation
+                        fingerprint
                         </span></i>
                     <p> Quản lý chấm công </p>
                 </a>
@@ -131,7 +132,7 @@
             </li>
             <li>
                 <a href="{{ route('bangluong') }}">
-                    <i class="material-icons">date_range</i>
+                    <i class="material-icons">local_atm</i>
                     <p> Bảng lương </p>
                 </a>
             </li>

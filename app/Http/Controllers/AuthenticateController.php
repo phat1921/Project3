@@ -28,16 +28,18 @@ class AuthenticateController extends Controller
                             ->where('mat_khau', $password)
                             ->firstOrFail();
                           
-                            // if($admin->id == 10){
+                            
                                 $request->session()->put('id',  $admin->id); 
                                 $request->session()->put('name',  $admin->ten_nv);
                                 $request->session()->put('anh', $admin->anh);  
                             //     return Redirect::route('calendar');
                                 
-                            // }else{ 
-                            //     $request->session()->put('idnv',  $admin->id); 
-                            //     $request->session()->put('namenv',  $admin->ten_nv); 
-                                return Redirect::route('dashboard'); 
+                                if($admin->id == 1){
+                                    return Redirect::route('dashboard');
+                                }else{
+                                    return Redirect::route('calendar');
+                                }
+                                 
                                 // return Redirect::route('calendar'); 
                             // }
                             

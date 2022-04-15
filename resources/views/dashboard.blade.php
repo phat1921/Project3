@@ -5,7 +5,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats">
                         <div class="card-header" data-background-color="orange">
-                            <i class="material-icons">weekend</i>
+                            <i class="material-icons">supervisor_account</i>
                         </div>
                         <div class="card-content">
                             <p class="category">Tổng Số nhân viên</p>
@@ -18,7 +18,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats">
                         <div class="card-header" data-background-color="rose">
-                            <i class="material-icons">equalizer</i>
+                            <i class="material-icons">sync_alt</i>
                         </div>
                         <div class="card-content">
                             <p class="category">Thử việc</p>
@@ -31,7 +31,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats">
                         <div class="card-header" data-background-color="green">
-                            <i class="material-icons">store</i>
+                            <i class="material-icons">how_to_reg</i>
                         </div>
                         <div class="card-content">
                             <p class="category">Chính thức</p>
@@ -43,8 +43,8 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats">
-                        <div class="card-header" data-background-color="blue">
-                            <i class="fa fa-twitter"></i>
+                        <div class="card-header" data-background-color="red">
+                            <i class="material-icons">no_accounts</i>
                         </div>
                         <div class="card-content">
                             <p class="category">Nghỉ việc</p>
@@ -56,10 +56,26 @@
                 </div>
             </div>
             <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">equalizer</i>
+                    </div>
+    
+                    <div class="card-content" >
+                    <h4 class="card-title">Tần suất đi làm muộn</h4>
+                    <div class="row">
+                      <div id="statistics-profit-chart"></div>
+                    </div>
+                </div>
+                </div>  
+            </div>  
+            
+
                 <div class="col-md-6">
                     <div class="card">
                     <div class="card-header card-header-icon" data-background-color="rose">
-                            <i class="material-icons">account_box</i>
+                            <i class="material-icons">article</i>
                     </div>
                     <div class="card-content" >
                         <h4 class="card-title"> Danh sách hợp đồng sắp kết thúc</h4>
@@ -76,23 +92,23 @@
                     </div>
                     </div>
                 </div>
-        
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header card-header-icon" data-background-color="rose">
-                            <i class="material-icons">account_box</i>
-                        </div>
-        
-                        <div class="card-content" >
-                        <h4 class="card-title">Thống kê đi làm muộn</h4>
-                        <div class="row">
-                          <div id="statistics-profit-chart"></div>
-                        </div>
-        
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card" style="margin-top: -50px;margin-left: 100px;">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">donut_small</i>
                     </div>
-        
-                    </div>   
+                    <div class="card-content" >
+                      <h4 class="card-title">Tỉ lệ chức vụ</h4>
+                      <div class="row">
+                        <div id="pie-profit-chart"></div>
+                      </div>
+      
+                  </div>
+                    
                 </div>   
+            </div>   
             </div>
             <div class="modal" tabindex="-1" id="add_edit" role="dialog">
                 <div class="modal-dialog" role="document">

@@ -36,6 +36,8 @@ Route::middleware([CheckLogged::class])->group(function(){
 Route::middleware([CheckLogin::class])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'static'])->name('dashboard');
     Route::get('/dashboard/list', [DashboardController::class, 'list'])->name('list');
+    Route::get('/dashboard/chartlate', [DashboardController::class, 'chartLate'])->name('chartlate');
+    Route::get('/dashboard/chartrole', [DashboardController::class, 'chartRole'])->name('chartlate');
 
 // Route::middleware([CheckLogin::class])->group(function(){
 //         Route::get('/chamcong', function(){

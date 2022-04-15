@@ -69,7 +69,7 @@ class BangLuongController extends Controller
 
     public function add(Request $request){
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         $nam = $request->get('nam');
@@ -159,7 +159,7 @@ class BangLuongController extends Controller
 
     public function load(Request $request, $id){
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         
@@ -171,7 +171,7 @@ class BangLuongController extends Controller
     public function edit(Request $request, $id)
     {
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
        $ngaycong = $request->get('ngaycong');
@@ -198,7 +198,7 @@ class BangLuongController extends Controller
 
     public function checkall(Request $request){ 
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         $nam = $request->get('nam');
@@ -219,7 +219,7 @@ class BangLuongController extends Controller
 
     public function uncheck(Request $request, $id){
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         $uncheck = BangLuong::find($id);
@@ -237,7 +237,7 @@ class BangLuongController extends Controller
 
     public function checkById(Request $request, $id){
         if($request->session()->get('id') != 1){
-            return Redirect::route('dashboard');
+            return Redirect::route('calendar');
             return false;
                 }
         $checkById = BangLuong::find($id);
