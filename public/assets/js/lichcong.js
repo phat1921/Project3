@@ -9,7 +9,8 @@
  **/
 
  'use-strict';
- var date = new Date(), staffId = 0;
+ var date = new Date();
+ var staffId = 0;
  var nextDay = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
  // prettier-ignore
  var nextMonth = date.getMonth() === 11 ? new Date(date.getFullYear() + 1, 0, 1) : new Date(date.getFullYear(), date.getMonth() + 1, 1);
@@ -366,15 +367,16 @@
             $('#frmCong')[0].reset();
              if (user == 1){
                 eventToUpdate = info.event;
+                console.log(eventToUpdate);
                 if (eventToUpdate.url) {
                     info.jsEvent.preventDefault();
                     window.open(eventToUpdate.url, '_blank');
                 }
                 sidebar.modal('show');
-                date.val(eventToUpdate.start);
+                date.val(moment(eventToUpdate.start).format('DD/MM/YYYY'));
                 congid = eventToUpdate.extendedProps.congid;
-                checkInTime.val(eventToUpdate.extendedProps.checkInTime, true, 'H:mm');
-                checkOutTime.val(eventToUpdate.extendedProps.checkOutTime, true, 'Y-m-d');
+                checkInTime.val(moment(eventToUpdate.extendedProps.checkInTime).format('HH:mm:ss'));
+                checkOutTime.val(moment(eventToUpdate.extendedProps.checkOutTime).format('HH:mm:ss'));
              }
              
          },
@@ -396,6 +398,10 @@
          //calendar.removeAllEvents();
          calendar.refetchEvents();
      });
+
+     $('#cancel').on('click', function(){
+         sidebar.modal('hide');
+     })
  
      // Validate add new and update form
      if (frmCong.length) {
@@ -533,7 +539,7 @@
 
     $('.timepicker').datetimepicker({
         //          format: 'H:mm',    // use this format if you want the 24hours timepicker
-        format: 'H:mm ',
+        format: 'HH:mm ',
         icons: {
             time: "fa fa-clock-o",
             date: "fa fa-calendar",
@@ -544,7 +550,7 @@
             today: 'fa fa-screenshot',
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
-        }
+        },
     });
 
  

@@ -23,9 +23,9 @@ $(document).ready(function () {
                 render: function (data, type, full, meta) {
                     var $status = full['trang_thai_hd'];
                        if($status == 1){
-                            return "<span>Đang thực hiện</span>";
+                            return "<span style='color:green'>Đang thực hiện</span>";
                        } else if($status == 2){
-                            return "<span>Đã kết thúc</span>";
+                            return "<span style='color:red'>Đã kết thúc</span>";
                        }
                  
                 },
@@ -67,7 +67,7 @@ $(document).ready(function () {
     };
 
     $('.datepicker').datetimepicker({
-        format: 'YYYY-MM-DD',
+        format: 'DD/MM/YYYY',
         icons: {
             // time: "fa fa-clock-o",
             date: "fa fa-calendar",
@@ -111,8 +111,8 @@ function edit(id){
             $('#phucap').val(Comma(response.data.phu_cap));
             $('#chinhanh').val(response.data.chi_nhanh);
             $('#diachi').val(response.data.dia_diem);
-            $('#startday').val(response.data.ngay_bat_dau);
-            $('#endday').val(response.data.ngay_ket_thuc);
+            $('#startday').val(moment(response.data.ngay_bat_dau).format('DD/MM/YYYY'));
+            $('#endday').val(moment(response.data.ngay_ket_thuc).format('DD/MM/YYYY'));
             $('#salary').val(Comma(response.data.luong_co_ban));
             $('#trangthai').val(response.data.trang_thai_hd).change();
 

@@ -48,7 +48,7 @@ class ChucVuController extends Controller
             return false;
                 }
         $name =  $request->get('name');
-       $salary = $request->get('salary');
+       $salary = str_replace(',', '',$request->get('salary'));
        $chucvu = ChucVu::find($id);
        $chucvu->ten_chuc_vu = $name;
        $chucvu->luong_co_ban = $salary;
@@ -70,7 +70,7 @@ class ChucVuController extends Controller
             return false;
                 }
        $name =  $request->get('name');
-       $salary = $request->get('salary');
+       $salary = str_replace(',', '',$request->get('salary'));
        $chucvu = new ChucVu();
        $chucvu->ten_chuc_vu = $name;
        $chucvu->luong_co_ban = $salary;

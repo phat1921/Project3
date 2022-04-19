@@ -718,7 +718,7 @@
 //              calendar.refetchEvents();
 //          });
 //      }
- });
+ });z
  
  function checkIn(){
     $.ajax({

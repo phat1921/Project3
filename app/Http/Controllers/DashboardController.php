@@ -44,6 +44,8 @@ class DashboardController extends Controller
         $data = [];
         $today = new DateTime();
         $date = new DateTime();
+        
+        $today->format('Y-m-d');
         $date->modify("+5 days")->format('Y-m-d');
             $hopDong = HopDong::where('hop_dong_lao_dong.trang_thai_hd', 1)
             ->join("nhan_vien", "hop_dong_lao_dong.id_nv", "=", "nhan_vien.id")
@@ -51,6 +53,7 @@ class DashboardController extends Controller
             ->where('ngay_ket_thuc', '>=', $today)
             ->where("nhan_vien.trang_thai",1)
             ->get();
+            
         $data['data'] = $hopDong;
         echo json_encode($data);
     }

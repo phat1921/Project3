@@ -40,7 +40,7 @@
                       </span>
                     </i>
                 </div>
-              <h5 class="title-chuc-vu">Modal title</h5>
+              <h5 class="title-chuc-vu">Thông tin chấm công</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -64,7 +64,7 @@
             </div>
             <div class="modal-footer">
               <button type="submit" id="updateEvent" class="btn btn-rose">cập nhật</button>
-              <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Bỏ qua</button>
+              <button type="button" class="btn btn-secondary" id="cancel">Bỏ qua</button>
             </div>
           </div>
         </div>

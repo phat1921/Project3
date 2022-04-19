@@ -94,7 +94,7 @@ function edit(id){
         success: function (response) {
             console.log(response);
             $('#name').val(response.data.ten_chuc_vu);
-            $('#salary').val(response.data.luong_co_ban);
+            $('#salary').val(Comma(response.data.luong_co_ban));
 
             url = "/chuc-vu/edit/"+id;
         }

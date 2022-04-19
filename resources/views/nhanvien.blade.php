@@ -45,18 +45,9 @@
             
                 <form id="frm" enctype="multipart/form-data">
                   {{ csrf_field() }}
-                    <div class="media mb-2 col-12">
-                      <div class="col-lg-9 d-flex mt-1 px-0">
-                          <img id="avatar" src="" alt="users avatar" onerror="this.src='{{ asset('assets') }}/img/placeholder.jpg'" style="height: 90px; width: 90px;margin-right: 30px;" />
-                              <span id="nhanvien">No name</span></br>
-                                  <span class="btn btn-round btn-rose btn-file" style="height: 40px" for="anh">
-                                      <span class="d-none d-sm-block">Thay ảnh</span>
-                                      <input class="form-control" type="file" id="hinhanh" name="anh" accept="image/png, image/jpeg, image/jpg"  />
-                                      <span class="d-block d-sm-none">
-                                          <i class="mr-0" data-feather="edit"></i>
-                                      </span>
-                                     
-                                  </span>   
+                    <div class="media mb-2 col-12" style="margin-left: 40px;">
+                      <div class="col-lg-8 d-flex mt-1 px-0">
+                          <img id="avatar" src="" alt="users avatar" onerror="this.src='{{ asset('assets') }}/img/placeholder.jpg'" style="height: 100px; width: 100px;margin-right: 30px;border-radius:50%" />
                       </div>
                       <div class="col-lg-3 d-flex mt-1 px-0">
                           <div class="form-group">

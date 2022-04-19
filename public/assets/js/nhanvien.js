@@ -29,6 +29,17 @@ $(document).ready(function () {
                 targets: 0,
                 visible: false,
             },
+
+            {
+                targets: 5,
+                render: function (data, type, full, meta) {
+                    
+                    return (
+                        '<div >' + moment(data).format('DD/MM/YYYY')+'</div>'
+                    );
+
+                }
+            },
             
             {
                 
@@ -65,7 +76,7 @@ $(document).ready(function () {
     };
    
     $('.datepicker').datetimepicker({
-        format: 'MM/DD/YYYY',
+        format: 'DD/MM/YYYY',
         icons: {
             time: "fa fa-clock-o",
             date: "fa fa-calendar",
@@ -102,14 +113,15 @@ function edit(id){
         dataType: "json",
         data: {id : id},
         success: function (response) {
-            console.log(response);
+            console.log(response.data);
             if(response.data.gioi_tinh == 1 ){
                 $('#male1').prop("checked", true);
             }else{
                 $('#female1').prop("checked", true);
             }
             $('#manv').val(response.data.ma_nv);
-            $('#date').val(response.data.ngay_sinh);
+            $('#avatar').prop('src', response.data.anh);
+            $('#date').val(moment(response.data.ngay_sinh).format('DD/MM/YYYY'));
             $('#sdt').val(response.data.sdt_nv);
             $('#email').val(response.data.email);
             $('#cmnd').val(response.data.cmnd);

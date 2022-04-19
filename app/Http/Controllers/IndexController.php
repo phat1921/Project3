@@ -168,7 +168,7 @@ class IndexController extends Controller
                 echo json_encode($jsonObj);
                 return false;
             }
-            if($checkInTime < $checkOutTime){
+            if($checkInTime > $checkOutTime){
                 $jsonObj['msg'] = "Giờ ra không thể nhỏ hơn giờ vào!";
                 $jsonObj['code'] = 402;
                 echo json_encode($jsonObj);
