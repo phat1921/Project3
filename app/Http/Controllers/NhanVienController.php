@@ -200,6 +200,24 @@ class NhanVienController extends Controller
    echo json_encode($json);
     }
 
+    public function unlock(Request $request, $id)
+    {
+        if($request->session()->get('id') != 1){
+            return Redirect::route('calendar'); 
+            return false;
+                }
+       $nhanvien = NhanVien::find($id);
+       $nhanvien->trang_thai = 1;
+
+       if( $nhanvien->save()){
+        $json['msg'] = "Cập nhật dữ liệu thành công";
+        $json['code'] = 200;
+    }else{
+        $json['msg'] = "Cập nhật dữ liệu thất bại";
+        $json['code'] = 401; 
+    }
+   echo json_encode($json);
+    }
 
     public function taikhoan(Request $request)
     {

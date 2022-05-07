@@ -32,9 +32,9 @@ $(document).ready(function () {
                 targets: 3,
                 render: function (data, type, full, meta) {
                    if(full['trang_thai'] == 1){
-                        return '<span>Đang sử dụng</span>';
+                        return '<span style="color:green">Đang sử dụng</span>';
                    }else{
-                       return '<span>Đã khóa</span>';
+                       return '<span style="color:red">Đã khóa</span>';
                    }
                     
                 },
@@ -51,9 +51,15 @@ $(document).ready(function () {
                         html += '<button rel="tooltip" class="btn btn-success" title="Chỉnh sửa" onclick="edit(' + full['id'] + ')">';
                         html += '<i class="material-icons">edit</i>';
                         html += '</button>&nbsp';
-                        html += '<button rel="tooltip" class="btn btn-danger" title="Xóa" id="confirm-text" onclick="del(' + full['id'] + ')">';
-                        html += '<i class="material-icons">close</i>';
-                        html += '</button>';
+                        if(full['trang_thai'] == 1){
+                            html += '<button rel="tooltip" class="btn btn-danger" title="Khóa" id="confirm-text" onclick="del(' + full['id'] + ')">';
+                            html += '<i class="material-icons">close</i>';
+                            html += '</button>';
+                        }else{
+                            html += '<button rel="tooltip" class="btn btn-danger" title="Mở khóa" id="confirm-text" onclick="unlock(' + full['id'] + ')">';
+                            html += '<i class="material-icons">replay</i>';
+                            html += '</button>';
+                        }
                     }
                     return html;
                 },
@@ -114,6 +120,25 @@ function add(){
     $('#password').val();
     url = "/tai-khoan/addTK";
 
+}
+
+function unlock(id){
+    $.ajax({
+        type: "post",
+        url: "/tai-khoan/unlock/"+id,
+        data: {id: id},
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if(response.code == 200){
+                notify_success(response.msg);
+                $('.table').DataTable().ajax.reload(null, false);
+            }else{
+                notify_error(response.msg);
+            }
+        }
+    });
 }
 
 function edit(id){

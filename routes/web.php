@@ -72,6 +72,7 @@ Route::middleware([CheckLogin::class])->group(function(){
     Route::post('/tai-khoan/addTK', [NhanVienController::class, 'addTK'])->name('tai-khoan-add');
     Route::post('/tai-khoan/editTK/{id}', [NhanVienController::class, 'editTK'])->name('tai-khoan-edit');
     Route::post('/tai-khoan/del/{id}', [NhanVienController::class, 'delTK'])->name('nhan-vien-del');
+    Route::post('/tai-khoan/unlock/{id}', [NhanVienController::class, 'unlock'])->name('nhan-vien-unlock');
     // Route::post('/nhan-vien/image/{id}', [NhanVienController::class, 'uploadImage'])->name('nhan-vien-image');
 
     route::get('/hop-dong', [HopDongController::class, 'index'])->name('hopdong');
